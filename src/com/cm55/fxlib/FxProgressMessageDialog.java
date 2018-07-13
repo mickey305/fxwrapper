@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.value.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
@@ -19,7 +21,7 @@ public class FxProgressMessageDialog {
     this(node, message, null);
   }
   
-  public FxProgressMessageDialog(Node node, String message, FxCallback<ButtonType> cancelCallback) {
+  public FxProgressMessageDialog(Node node, String message, Consumer<ButtonType> cancelCallback) {
     dialog = new Alert(AlertType.INFORMATION, message, ButtonType.CANCEL);
     dialog.setTitle("Waiting");
     dialog.setHeaderText("Please wait for a while");
@@ -39,14 +41,14 @@ public class FxProgressMessageDialog {
   }
   
   
-  public FxProgressMessageDialog handleCancel(FxCallback<ButtonType> cancelCallback) {
+  public FxProgressMessageDialog handleCancel(Consumer<ButtonType> cancelCallback) {
     dialog.resultProperty().addListener(new ChangeListener<ButtonType>() {
       public void changed(ObservableValue<? extends ButtonType> observable, ButtonType oldValue, ButtonType newValue) {        
         // 明示的にクローズされた場合にもこのコールバックは呼び出されてしまう。キャンセルボタン押下以外は処理しない。
         if (programaticallyClosed) return;
         
         // 自動でclose
-        cancelCallback.callback(newValue);
+        cancelCallback.accept(newValue);
       }      
     });    
     return this;

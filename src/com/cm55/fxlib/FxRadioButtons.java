@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.property.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -19,7 +21,7 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons> {
     }
   }
   
-  private FxCallback<Integer>callback;
+  private Consumer<Integer>callback;
   private RadioButton[]radioButtons;
   private ToggleGroup buttonGroup;
   private FxBox<?> box;
@@ -63,7 +65,7 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons> {
       if (selecting) return;
       for (int i = 0; i < radioButtons.length; i++) {
         if (new_toggle == radioButtons[i]) {
-          if (callback != null) callback.callback(i);
+          if (callback != null) callback.accept(i);
           return;
         }
       }
@@ -72,7 +74,7 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons> {
   }
   
   /** コールバックを設定する */
-  public FxRadioButtons setCallback(FxCallback<Integer>callback) {
+  public FxRadioButtons setCallback(Consumer<Integer>callback) {
     this.callback = callback;
     return this;
   }

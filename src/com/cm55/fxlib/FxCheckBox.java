@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.event.*;
@@ -8,7 +10,7 @@ import javafx.scene.control.*;
 public class FxCheckBox implements FocusControl<FxCheckBox> {
 
   private CheckBox button;
-  private FxCallback<Boolean>callback;
+  private Consumer<Boolean>callback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   private SimpleBooleanProperty bindedProperty;
   
@@ -30,7 +32,7 @@ public class FxCheckBox implements FocusControl<FxCheckBox> {
         if (programaticalSelection) return;
         boolean value = button.isSelected();
         if (bindedProperty != null) bindedProperty.set(value);
-        if (callback != null) callback.callback(value);
+        if (callback != null) callback.accept(value);
       }      
     });
   }
@@ -40,7 +42,7 @@ public class FxCheckBox implements FocusControl<FxCheckBox> {
     setText(text);
   }
 
-  public FxCheckBox(String text, FxCallback<Boolean>callback) {
+  public FxCheckBox(String text, Consumer<Boolean>callback) {
     this(text);
     setCallback(callback);
   }
@@ -105,7 +107,7 @@ public class FxCheckBox implements FocusControl<FxCheckBox> {
     return this;
   }
   
-  public FxCheckBox setCallback(FxCallback<Boolean>callback) {
+  public FxCheckBox setCallback(Consumer<Boolean>callback) {
     this.callback = callback;
     return this;
   }

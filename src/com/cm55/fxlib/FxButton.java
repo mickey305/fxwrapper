@@ -1,12 +1,14 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.scene.control.*;
 import javafx.scene.paint.*;
 
 public class FxButton implements FocusControl<FxButton> {
   
   private Button button;
-  private FxCallback<FxButton> action;
+  private Consumer<FxButton> action;
   private boolean focussable = FocusControlPolicy.getDefaultFocusable();
   
   public FxButton(String label) {
@@ -17,11 +19,11 @@ public class FxButton implements FocusControl<FxButton> {
       }
     };
     button.setOnAction((value) -> {
-      if (action != null) action.callback(FxButton.this);
+      if (action != null) action.accept(FxButton.this);
     });
   }
   
-  public FxButton(String label, FxCallback<FxButton>action) {
+  public FxButton(String label, Consumer<FxButton>action) {
     this(label);
     setAction(action);
   }
@@ -47,7 +49,7 @@ public class FxButton implements FocusControl<FxButton> {
     return this;
   }
 
-  public FxButton setAction(FxCallback<FxButton>action) {
+  public FxButton setAction(Consumer<FxButton>action) {
     this.action = action;
     return this;
   }

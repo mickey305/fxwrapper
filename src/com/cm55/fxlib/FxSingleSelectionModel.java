@@ -1,6 +1,8 @@
 package com.cm55.fxlib;
 
 
+import java.util.function.*;
+
 import javafx.scene.control.*;
 
 public class FxSingleSelectionModel<E> {
@@ -56,7 +58,7 @@ public class FxSingleSelectionModel<E> {
     }
   }
   
-  public void listenSelection(FxCallback<Integer>callback) {
+  public void listenSelection(Consumer<Integer>callback) {
     eventer.add(SELECTION, callback);
   }
 

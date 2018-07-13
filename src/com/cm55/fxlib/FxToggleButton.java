@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.event.*;
@@ -8,7 +10,7 @@ import javafx.scene.control.*;
 public class FxToggleButton implements FocusControl<FxToggleButton> {
 
   private ToggleButton button;
-  private FxCallback<Boolean>callback;
+  private Consumer<Boolean>callback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   private SimpleBooleanProperty bindedProperty;
   
@@ -30,7 +32,7 @@ public class FxToggleButton implements FocusControl<FxToggleButton> {
         if (programaticalSelection) return;
         boolean value = button.isSelected();
         if (bindedProperty != null) bindedProperty.set(value);
-        if (callback != null) callback.callback(value);
+        if (callback != null) callback.accept(value);
       }      
     });
   }
@@ -45,7 +47,7 @@ public class FxToggleButton implements FocusControl<FxToggleButton> {
     setText(text);
   }
 
-  public FxToggleButton(String text, FxCallback<Boolean>callback) {
+  public FxToggleButton(String text, Consumer<Boolean>callback) {
     this(text);
     setCallback(callback);
   }
@@ -110,7 +112,7 @@ public class FxToggleButton implements FocusControl<FxToggleButton> {
     return this;
   }
   
-  public FxToggleButton setCallback(FxCallback<Boolean>callback) {
+  public FxToggleButton setCallback(Consumer<Boolean>callback) {
     this.callback = callback;
     return this;
   }

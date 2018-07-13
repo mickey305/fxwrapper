@@ -1,6 +1,7 @@
 package com.cm55.fxlib;
 
 import java.util.*;
+import java.util.function.*;
 
 import javafx.beans.value.*;
 import javafx.scene.*;
@@ -78,7 +79,7 @@ public class FxTabPane extends TabPane {
     return this;
   }
   
-  public void listenChange(FxCallback<ChangeEvent>o) {
+  public void listenChange(Consumer<ChangeEvent>o) {
     eventer.add(CHANGE_EVENT,  o);
   }
 

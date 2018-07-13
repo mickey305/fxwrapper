@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 //Java9コンパイラはエラーを出す。実行時エラーは無いが、Java9で仕様変更されており、機能しない。
 import com.sun.javafx.scene.control.behavior.*;
 import com.sun.javafx.scene.control.skin.*;
@@ -14,25 +16,25 @@ import javafx.scene.text.*;
 public class FxTextArea implements FocusControl<FxTextArea> {
 
   private TextArea textArea;
-  private FxCallback<String>textChangedCallback;
-  private FxCallback<String>copiedCallback;
-  private FxCallback<FxTextArea>mouseReleasedCallback;
-  private FxCallback<FxTextArea>mousePressedCallback;
-  private FxCallback<KeyEvent>keyPressedCallback;
+  private Consumer<String>textChangedCallback;
+  private Consumer<String>copiedCallback;
+  private Consumer<FxTextArea>mouseReleasedCallback;
+  private Consumer<FxTextArea>mousePressedCallback;
+  private Consumer<KeyEvent>keyPressedCallback;
   private boolean textSetting = false;
   private boolean focusable;
   
-  public FxTextArea setCopiedCallback(FxCallback<String>copiedCallback) {
+  public FxTextArea setCopiedCallback(Consumer<String>copiedCallback) {
     this.copiedCallback = copiedCallback;
     return this;
   }
   
-  public FxTextArea setMouseReleasedCallback(FxCallback<FxTextArea>callback) {
+  public FxTextArea setMouseReleasedCallback(Consumer<FxTextArea>callback) {
     this.mouseReleasedCallback = callback;
     return this;
   }
   
-  public FxTextArea setMousePressedCallback(FxCallback<FxTextArea>callback) {
+  public FxTextArea setMousePressedCallback(Consumer<FxTextArea>callback) {
     this.mousePressedCallback = callback;
     return this;
   }
@@ -56,7 +58,7 @@ public class FxTextArea implements FocusControl<FxTextArea> {
       public void copy() {
         String selectedText = getSelectedText();
         super.copy();
-        if (copiedCallback != null) copiedCallback.callback(selectedText);
+        if (copiedCallback != null) copiedCallback.accept(selectedText);
       }
     };
         
@@ -88,12 +90,12 @@ public class FxTextArea implements FocusControl<FxTextArea> {
     
     textArea.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
       public void handle(MouseEvent event) {
-        if (mousePressedCallback != null) mousePressedCallback.callback(FxTextArea.this);
+        if (mousePressedCallback != null) mousePressedCallback.accept(FxTextArea.this);
       }
     });
     textArea.addEventFilter(MouseEvent.MOUSE_RELEASED, new EventHandler<MouseEvent>() {
       public void handle(MouseEvent event) {
-        if (mouseReleasedCallback != null) mouseReleasedCallback.callback(FxTextArea.this);
+        if (mouseReleasedCallback != null) mouseReleasedCallback.accept(FxTextArea.this);
       }
     });
     
@@ -107,7 +109,7 @@ public class FxTextArea implements FocusControl<FxTextArea> {
     });  
     textArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
       public void handle(KeyEvent event) {
-        if (keyPressedCallback != null) keyPressedCallback.callback(event);
+        if (keyPressedCallback != null) keyPressedCallback.accept(event);
       }      
     });
   }
@@ -149,7 +151,7 @@ public class FxTextArea implements FocusControl<FxTextArea> {
     return this;
   }
   
-  public FxTextArea(FxCallback<String>callback) {
+  public FxTextArea(Consumer<String>callback) {
     this();
     setTextChangedCallback(callback);
   }
@@ -164,12 +166,12 @@ public class FxTextArea implements FocusControl<FxTextArea> {
     return this;
   }
   
-  public FxTextArea setKeyPressedCallback(FxCallback<KeyEvent>callback) {
+  public FxTextArea setKeyPressedCallback(Consumer<KeyEvent>callback) {
     this.keyPressedCallback = callback;
     return this;
   }
   
-  public FxTextArea setTextChangedCallback(FxCallback<String>callback) {
+  public FxTextArea setTextChangedCallback(Consumer<String>callback) {
     this.textChangedCallback = callback;
     return this;
   }
@@ -204,7 +206,7 @@ public class FxTextArea implements FocusControl<FxTextArea> {
   
   private void textChanged(String text) {
     if (textSetting) return;
-    if (textChangedCallback != null) textChangedCallback.callback(text);
+    if (textChangedCallback != null) textChangedCallback.accept(text);
   }
   
   public TextArea getControl() {

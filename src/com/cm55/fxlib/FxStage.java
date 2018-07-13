@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.scene.*;
@@ -13,9 +15,9 @@ public class FxStage {
   public SimpleBooleanProperty showingProperty() { return showingProperty; }
 
   private boolean hidingEvent;
-  private FxCallback<FxStage>onShowingCallback;
-  private FxCallback<FxStage>onHidingCallback;
-  private FxCallback<Boolean>onFocusChanged;
+  private Consumer<FxStage>onShowingCallback;
+  private Consumer<FxStage>onHidingCallback;
+  private Consumer<Boolean>onFocusChanged;
   
   public FxStage() {
  
@@ -23,12 +25,12 @@ public class FxStage {
     
     // 表示直前のコールバック
     stage.setOnShowing(e-> {
-      if (onShowingCallback != null) onShowingCallback.callback(this);
+      if (onShowingCallback != null) onShowingCallback.accept(this);
     });
 
     // 消去直前のコールバック
     stage.setOnHiding(e-> {
-      if (onHidingCallback != null) onHidingCallback.callback(this);
+      if (onHidingCallback != null) onHidingCallback.accept(this);
       hidingEvent = true;
       try {
         showingProperty.set(false);
@@ -49,24 +51,24 @@ public class FxStage {
     
     // フォーカス変更のハンドリング
     this.stage.focusedProperty().addListener((ChangeListener<Boolean>)(ob, o, n)-> {
-      if (onFocusChanged != null) onFocusChanged.callback(n);
+      if (onFocusChanged != null) onFocusChanged.accept(n);
     });
   }
 
   /** 表示直前に呼ばれるコールバックを登録 */
-  public FxStage setOnShowing(FxCallback<FxStage>callback) {
+  public FxStage setOnShowing(Consumer<FxStage>callback) {
     this.onShowingCallback = callback;
     return this;
   }
 
   /** 消去直前に呼ばれるコールバックを登録 */
-  public FxStage setOnHiding(FxCallback<FxStage>callback) {
+  public FxStage setOnHiding(Consumer<FxStage>callback) {
     this.onHidingCallback = callback;
     return this;
   }
 
   /** フォーカス変更時に呼ばれるコールバックを登録 */
-  public FxStage setOnFocusChanged(FxCallback<Boolean>callback) {
+  public FxStage setOnFocusChanged(Consumer<Boolean>callback) {
     this.onFocusChanged = callback;
     return this;
   }

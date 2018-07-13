@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import org.fxmisc.flowless.*;
 import org.fxmisc.richtext.*;
 import org.fxmisc.richtext.model.*;
@@ -23,9 +25,9 @@ public class FxRichTextArea {
   @SuppressWarnings("rawtypes")
   private VirtualizedScrollPane scrollPane;
   private FxUnmanageChild unmanageChild;
-  private FxCallback<String>textChangedCallback;
-  private FxCallback<Integer>caretPositionCallback;
-  private FxCallback<FxRichTextArea>pureScrollCallback;
+  private Consumer<String>textChangedCallback;
+  private Consumer<Integer>caretPositionCallback;
+  private Consumer<FxRichTextArea>pureScrollCallback;
   private boolean textUpdating;
   private PureScrolling pureScrolling = new PureScrolling();
   
@@ -60,19 +62,19 @@ public class FxRichTextArea {
   }
   
   /** キャレットの位置変更コールバックを受ける */
-  public FxRichTextArea setCaretPositionCallback(FxCallback<Integer>callback) {
+  public FxRichTextArea setCaretPositionCallback(Consumer<Integer>callback) {
     this.caretPositionCallback = callback;    
     return this;
   }
   
   /** テキスト変更通知を受ける */
-  public FxRichTextArea setTextChangedCallback(FxCallback<String>callback) {
+  public FxRichTextArea setTextChangedCallback(Consumer<String>callback) {
     this.textChangedCallback = callback;
     return this;
   }
 
   /** キャレットの動きによらないピュアなスクロールコールバックを設定する */
-  public FxRichTextArea setPureScrollCallback(FxCallback<FxRichTextArea>callback) {
+  public FxRichTextArea setPureScrollCallback(Consumer<FxRichTextArea>callback) {
     this.pureScrollCallback = callback;
     return this;
   }
@@ -136,13 +138,13 @@ public class FxRichTextArea {
     textArea.caretPositionProperty().addListener(position -> {
       pureScrolling.caretDetect();
       if (caretPositionCallback == null) return;
-      caretPositionCallback.callback(getCaretLine());      
+      caretPositionCallback.accept(getCaretLine());      
     });
     textArea.textProperty().addListener(new ChangeListener<String>() {
       public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
           final String newValue) {
         if (textUpdating) return;
-        if (textChangedCallback != null) textChangedCallback.callback(newValue);
+        if (textChangedCallback != null) textChangedCallback.accept(newValue);
       }
     });  
     
@@ -160,7 +162,7 @@ public class FxRichTextArea {
     scrollPane = new VirtualizedScrollPane<>(textArea);      
     scrollPane.estimatedScrollYProperty().addListener((ob, o, n)-> {
       if (!pureScrolling.isPureScrolling()) return;
-      if (this.pureScrollCallback != null) pureScrollCallback.callback(FxRichTextArea.this);
+      if (this.pureScrollCallback != null) pureScrollCallback.accept(FxRichTextArea.this);
     });    
   }
   

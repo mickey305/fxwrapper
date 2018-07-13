@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.scene.control.*;
 import javafx.scene.control.SpinnerValueFactory.*;
 
@@ -12,7 +14,7 @@ public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
 
   private Spinner<Double> spinner;
   private DoubleSpinnerValueFactory valueFactory;
-  private FxCallback<Double> valueChangedCallback;
+  private Consumer<Double> valueChangedCallback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   
   public FxDoubleSpinner() {
@@ -23,7 +25,7 @@ public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
     };
     spinner.setEditable(true);
     spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-      if (valueChangedCallback != null) valueChangedCallback.callback(newValue);
+      if (valueChangedCallback != null) valueChangedCallback.accept(newValue);
  
     });
   }
@@ -33,7 +35,7 @@ public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
     setRange(min, max, step, value);
   }
   
-  public FxDoubleSpinner(double min, double max, double step, double value, FxCallback<Double> callback) {
+  public FxDoubleSpinner(double min, double max, double step, double value, Consumer<Double> callback) {
     this(min, max, step, value);
     setValueChangedCallback(callback);
   }
@@ -60,7 +62,7 @@ public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
   }
 
   /** コールバックを設定する */
-  public FxDoubleSpinner setValueChangedCallback(FxCallback<Double> callback) {
+  public FxDoubleSpinner setValueChangedCallback(Consumer<Double> callback) {
     this.valueChangedCallback = callback;
     return this;
   }

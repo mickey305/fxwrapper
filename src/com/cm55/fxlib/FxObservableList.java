@@ -1,6 +1,7 @@
 package com.cm55.fxlib;
 
 import java.util.*;
+import java.util.function.*;
 
 //Java9コンパイラはエラーを出すが使用可能
 import com.sun.javafx.collections.*;
@@ -46,11 +47,11 @@ public class FxObservableList<E> extends ObservableListWrapper<E> {
     });
   }
 
-  public void listenListChanged(FxCallback<FxObservableListChanged>l) {
+  public void listenListChanged(Consumer<FxObservableListChanged>l) {
     eventer.add(LIST_CHANGED, l);
   }
 
-  public void listenAboutToRemove(FxCallback<FxObservableListAboutToRemove>l) {
+  public void listenAboutToRemove(Consumer<FxObservableListAboutToRemove>l) {
     eventer.add(ABOUT_TO_REMOVE, l);
   }
   

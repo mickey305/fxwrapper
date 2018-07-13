@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.scene.control.*;
@@ -8,8 +10,8 @@ import javafx.scene.input.*;
 public class FxTextField implements FocusControl<FxTextField> {
 
   private TextField textField;
-  private FxCallback<String>textChangedCallback;
-  private FxCallback<KeyEvent>keyPressedCallback;
+  private Consumer<String>textChangedCallback;
+  private Consumer<KeyEvent>keyPressedCallback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   private boolean updating = false;
   
@@ -24,12 +26,12 @@ public class FxTextField implements FocusControl<FxTextField> {
       public void changed(final ObservableValue<? extends String> observableValue, final String oldValue,
           final String newValue) {
         if (updating) return;
-        if (textChangedCallback != null) textChangedCallback.callback(newValue);
+        if (textChangedCallback != null) textChangedCallback.accept(newValue);
       }
     });  
     textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
       public void handle(KeyEvent event) {
-        if (keyPressedCallback != null) keyPressedCallback.callback(event);
+        if (keyPressedCallback != null) keyPressedCallback.accept(event);
       }      
     });
   }
@@ -43,12 +45,12 @@ public class FxTextField implements FocusControl<FxTextField> {
     return this;
   }
   
-  public FxTextField setTextChangedCallback(FxCallback<String>callback) {
+  public FxTextField setTextChangedCallback(Consumer<String>callback) {
     this.textChangedCallback = callback;
     return this;
   }
   
-  public FxTextField setKeyPressedCallback(FxCallback<KeyEvent>callback) {
+  public FxTextField setKeyPressedCallback(Consumer<KeyEvent>callback) {
     this.keyPressedCallback = callback;
     return this;
   }

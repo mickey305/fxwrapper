@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.scene.control.*;
 
 /**
@@ -11,7 +13,7 @@ public class FxIntSpinner implements FocusControl<FxIntSpinner> {
 
   private Spinner<Integer> spinner;
   private SpinnerValueFactory<Integer>valueFactory;
-  private FxCallback<Integer> valueChangedCallback;
+  private Consumer<Integer> valueChangedCallback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   private boolean updating;
   
@@ -23,7 +25,7 @@ public class FxIntSpinner implements FocusControl<FxIntSpinner> {
     };
     spinner.setEditable(true);
     spinner.valueProperty().addListener((obs, oldValue, newValue) -> {
-      if (valueChangedCallback != null && !updating) valueChangedCallback.callback(newValue); 
+      if (valueChangedCallback != null && !updating) valueChangedCallback.accept(newValue); 
     });
   }
 
@@ -32,7 +34,7 @@ public class FxIntSpinner implements FocusControl<FxIntSpinner> {
     setRange(min, max, value);
   }
   
-  public FxIntSpinner(int min, int max, int value, FxCallback<Integer> callback) {
+  public FxIntSpinner(int min, int max, int value, Consumer<Integer> callback) {
     this(min, max, value);
     setValueChangedCallback(callback);
   }
@@ -63,7 +65,7 @@ public class FxIntSpinner implements FocusControl<FxIntSpinner> {
   }
 
   /** コールバックを設定する */
-  public FxIntSpinner setValueChangedCallback(FxCallback<Integer> callback) {
+  public FxIntSpinner setValueChangedCallback(Consumer<Integer> callback) {
     this.valueChangedCallback = callback;
     return this;
   }

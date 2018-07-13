@@ -3,6 +3,7 @@ package com.cm55.fxlib;
 import static com.cm55.fxlib.FxLabel.*;
 
 import java.util.*;
+import java.util.function.*;
 import java.util.stream.*;
 
 import javafx.application.*;
@@ -30,7 +31,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
   private FxObservableList<E> rows;
   private FxSingleSelectionModel<E> selection;
   private TableRowVisible<E> tableRowVisible;
-  private FxCallback<FxTable<E>>focusedCallback;
+  private Consumer<FxTable<E>>focusedCallback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
   private ObservableList<TableColumn<E, ?>> columns;
   
@@ -48,7 +49,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
       public void handle(MouseEvent event) {
         if (focusedCallback != null) {
           Platform.runLater(()-> {
-            focusedCallback.callback(FxTable.this);
+            focusedCallback.accept(FxTable.this);
           });
         }
       }      
@@ -65,7 +66,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
     return this;
   }
   
-  public FxTable<E> setFocusedCallback(FxCallback<FxTable<E>>focusedCallback) {
+  public FxTable<E> setFocusedCallback(Consumer<FxTable<E>>focusedCallback) {
     this.focusedCallback = focusedCallback;
     return this;
   }
@@ -410,7 +411,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
    */
   public static class CheckColumn<E> extends Column<E, Boolean> {
     
-    private FxCallback<Integer> actionCallback;
+    private Consumer<Integer> actionCallback;
     
     public CheckColumn(String title, PropertyGetter<E, Boolean>propertyGetter) {
       this(title, propertyGetter, 0);
@@ -433,14 +434,14 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
             box.selectedProperty().bindBidirectional(checked);
             setGraphic(box);
             box.setOnAction(b-> {
-              if (actionCallback != null) actionCallback.callback(getIndex());
+              if (actionCallback != null) actionCallback.accept(getIndex());
             });
           }
         }
       });
     }
     
-    public CheckColumn<E> setCallback(FxCallback<Integer>callback) {
+    public CheckColumn<E> setCallback(Consumer<Integer>callback) {
       actionCallback = callback;
       return this;
     }
@@ -454,12 +455,12 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
     }
 
     /** 列タイトル、フィールド名を指定する */
-    public ButtonColumn(String title, String buttonText, FxCallback<Integer>callback) {
+    public ButtonColumn(String title, String buttonText, Consumer<Integer>callback) {
       super(title, null);
       col.setCellFactory(param -> {
         TableCell<E, String> cell = new TableCell<E, String>() {          
           FxButton button = new FxButton(buttonText, b-> {
-            callback.callback(getIndex());
+            callback.accept(getIndex());
           });
           @Override
           public void updateItem(String item, boolean empty) {
@@ -486,11 +487,11 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
     }
 
     /** 列タイトル、フィールド名を指定する */
-    public EnabledButtonColumn(String title, PropertyGetter<E, Boolean>propertyGetter, String buttonText, FxCallback<Integer>callback) {
+    public EnabledButtonColumn(String title, PropertyGetter<E, Boolean>propertyGetter, String buttonText, Consumer<Integer>callback) {
       super(title, propertyGetter);
       col.setCellFactory(column -> new TableCell<E, Boolean>() {          
         FxButton button = new FxButton(buttonText, b-> {
-          callback.callback(getIndex()); 
+          callback.accept(getIndex()); 
         });
         @Override
         public void updateItem(Boolean item, boolean empty) {

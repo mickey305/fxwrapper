@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.value.*;
 import javafx.scene.control.*;
 
@@ -24,7 +26,7 @@ public class FxComboBox<T> implements FocusControl<FxComboBox<T>> {
   private FxSelections<T> selections;
 
   /** 選択時のコールバック */
-  private FxCallback<T> selectionCallback;
+  private Consumer<T> selectionCallback;
   
   /** 自身が発生したイベントを示すフラグ */
   private boolean selfEvent;
@@ -42,7 +44,7 @@ public class FxComboBox<T> implements FocusControl<FxComboBox<T>> {
       if (selfEvent)
         return;
       if (selectionCallback != null) {
-        selectionCallback.callback(getSelection());
+        selectionCallback.accept(getSelection());
       }
       // selectionChange(n);
     });
@@ -64,7 +66,7 @@ public class FxComboBox<T> implements FocusControl<FxComboBox<T>> {
   }
   
   /** 選択時コールバックを設定する */
-  public FxComboBox<T> setSelectionCallback(FxCallback<T> callback) {
+  public FxComboBox<T> setSelectionCallback(Consumer<T> callback) {
     this.selectionCallback = callback;
     return this;
   }

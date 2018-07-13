@@ -1,6 +1,7 @@
 package com.cm55.fxlib;
 
 import java.util.*;
+import java.util.function.*;
 
 /**
  * イベントシステム。
@@ -50,13 +51,13 @@ public class FxEventer {
   protected Set<Registration<?>>registrations = new HashSet<Registration<?>>();
 
   /** イベントタイプ、コールバックを指定して登録する */
-  public <T>void add(FxEventType<T>type, FxCallback<T>callback) {
+  public <T>void add(FxEventType<T>type, Consumer<T>callback) {
     registrations.add(new Registration<T>(type, callback));
   }
 
   /** イベントタイプ、コールバックを指定して登録除去する */
   @SuppressWarnings({ "rawtypes", "unchecked" })
-  public <T>boolean remove(FxEventType<T>type, FxCallback<T>callback) {
+  public <T>boolean remove(FxEventType<T>type, Consumer<T>callback) {
     return registrations.remove(new Registration(type, callback));
   }
 
@@ -74,7 +75,7 @@ public class FxEventer {
   @SuppressWarnings("unchecked")
   public <T>void fire(FxEventType<T>type, T event) {
     registrations.stream().filter(s->s.type == type).forEach(s-> {
-      ((FxCallback<T>)s.callback).callback(event);
+      ((Consumer<T>)s.callback).accept(event);
     });
   }
 
@@ -84,9 +85,9 @@ public class FxEventer {
     public FxEventType<T>type;
     
     /** コールバック */
-    public FxCallback<T>callback;
+    public Consumer<T>callback;
     
-    public Registration(FxEventType<T>type, FxCallback<T>callback) {
+    public Registration(FxEventType<T>type, Consumer<T>callback) {
       this.type = type;
       this.callback = callback;
     }
@@ -109,7 +110,7 @@ public class FxEventer {
   public static class ListenerGroup {
     private Set<Registration<?>>set = new HashSet<>();    
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public <T>ListenerGroup add(FxEventType<T>type, FxCallback<T>callback) {
+    public <T>ListenerGroup add(FxEventType<T>type, Consumer<T>callback) {
       set.add(new Registration(type, callback));
       return this;
     }

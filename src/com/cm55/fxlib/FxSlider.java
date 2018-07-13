@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.function.*;
+
 import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
@@ -24,12 +26,12 @@ public class FxSlider implements FocusControl<FxSlider> {
     }
     slider.valueProperty().addListener((ObservableValue<? extends Number> ov, Number oldValue, Number newValue) -> {
       if (setting) return;
-      if (positionChangedCallback != null) positionChangedCallback.callback(newValue.doubleValue());
+      if (positionChangedCallback != null) positionChangedCallback.accept(newValue.doubleValue());
     });
     slider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
       @Override
       public void changed(ObservableValue<? extends Boolean> observableValue, Boolean wasChanging, Boolean changing) {
-        if (changeStartEndCallback != null) changeStartEndCallback.callback(changing);
+        if (changeStartEndCallback != null) changeStartEndCallback.accept(changing);
       }
     });
   }
@@ -74,15 +76,15 @@ public class FxSlider implements FocusControl<FxSlider> {
     slider.setMaxWidth(width);
   }
   
-  private FxCallback<Double>positionChangedCallback;
-  private FxCallback<Boolean>changeStartEndCallback;
+  private Consumer<Double>positionChangedCallback;
+  private Consumer<Boolean>changeStartEndCallback;
   
-  public FxSlider setOnPositionChanged(FxCallback<Double>positionChangedCallback) {
+  public FxSlider setOnPositionChanged(Consumer<Double>positionChangedCallback) {
     this.positionChangedCallback = positionChangedCallback;
     return this;
   }
 
-  public FxSlider setOnChangeStartEnd(FxCallback<Boolean>changeStartEndCallback) {
+  public FxSlider setOnChangeStartEnd(Consumer<Boolean>changeStartEndCallback) {
     this.changeStartEndCallback = changeStartEndCallback;
     return this;
   }
