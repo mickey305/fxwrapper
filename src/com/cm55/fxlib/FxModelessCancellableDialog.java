@@ -1,7 +1,6 @@
 package com.cm55.fxlib;
 
 import javafx.event.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 
@@ -15,10 +14,10 @@ public class FxModelessCancellableDialog {
   protected final Window window;
   protected final DialogPane dialogPane;
   
-  public FxModelessCancellableDialog(Node node) {
+  public FxModelessCancellableDialog(FxNode node) {
     dialog = new Dialog<Object>();
     dialog.initModality(Modality.NONE);  
-    dialog.initOwner(node.getScene().getWindow());
+    dialog.initOwner(node.node().getScene().getWindow());
     dialogPane = dialog.getDialogPane();    
     dialogPane.getButtonTypes().addAll(ButtonType.CANCEL);
     window = dialogPane.getScene().getWindow();  

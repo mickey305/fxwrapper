@@ -42,9 +42,9 @@ public class FxLineDialog extends FxOkCancelDlg<String, String> {
     return box;
   }
   
-  private Node node;
+  private FxNode node;
   
-  public String showAndWait(Node node, String title, String message, String input) {
+  public String showAndWait(FxNode node, String title, String message, String input) {
     initialize(node);
     this.node = node;
     dialog.setTitle(title);

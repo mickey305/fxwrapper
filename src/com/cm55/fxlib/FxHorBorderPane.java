@@ -4,10 +4,10 @@ import java.util.*;
 import java.util.stream.*;
 
 import javafx.geometry.*;
-import javafx.scene.*;
+import javafx.scene.Node;
 import javafx.scene.layout.*;
 
-public class FxHorBorderPane  {
+public class FxHorBorderPane implements FxNode {
 
   private BorderPane pane;
   private Node[]nodes;
@@ -58,6 +58,10 @@ public class FxHorBorderPane  {
   }
   
   public BorderPane getPane() {
+    return pane;
+  }
+  
+  public BorderPane node() {
     return pane;
   }
 }

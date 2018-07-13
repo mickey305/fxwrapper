@@ -3,7 +3,6 @@ package com.cm55.fxlib;
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -23,7 +22,7 @@ public class FxProgressBarDialog extends FxModelessCancellableDialog {
    * @param title
    */
   @SuppressWarnings("static-access")
-  public FxProgressBarDialog(Node node, String title, double total) {
+  public FxProgressBarDialog(FxNode node, String title, double total) {
     super(node);
     this.total = total;
     dialog.setTitle(title);
@@ -36,7 +35,7 @@ public class FxProgressBarDialog extends FxModelessCancellableDialog {
       public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
         if (!newValue) return;
         Platform.runLater(()-> {
-          node.getScene().getWindow().requestFocus();
+          node.node().getScene().getWindow().requestFocus();
         });
       }      
     });    

@@ -6,7 +6,6 @@ import java.util.stream.*;
 import com.cm55.fxlib.splitPane.*;
 import com.cm55.fxlib.splitPane.Divider.*;
 import com.cm55.fxlib.splitPane.OrientationAdapter.*;
-
 //Java9コンパイラはエラーを出すが使用可能
 import com.sun.javafx.collections.*;
 
@@ -16,7 +15,7 @@ import javafx.collections.*;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 
-public class FxSplitPane {
+public class FxSplitPane implements FxNode {
   
   public static class Hor extends FxSplitPane {
     public Hor(Node... nodes) {
@@ -127,6 +126,10 @@ public class FxSplitPane {
     return pane;
   }
 
+  public Pane node() {
+    return pane;
+  }
+  
   /** スペーシングを取得する */
   public int getSpacing() {
     return spacing.get();

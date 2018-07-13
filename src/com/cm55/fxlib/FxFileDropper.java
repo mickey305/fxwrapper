@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.*;
 
 import javafx.event.*;
-import javafx.scene.*;
 import javafx.scene.input.*;
 
 /**
@@ -13,11 +12,11 @@ import javafx.scene.input.*;
  */
 public abstract class FxFileDropper {
 
-  private Node node;
+  private FxNode node;
   
-  public FxFileDropper(Node node) {
+  public FxFileDropper(FxNode node) {
     this.node = node;
-    node.setOnDragOver(new EventHandler<DragEvent>() {
+    node.node().setOnDragOver(new EventHandler<DragEvent>() {
       @Override
       public void handle(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -30,7 +29,7 @@ public abstract class FxFileDropper {
     });
 
     // Dropping over surface
-    node.setOnDragDropped(new EventHandler<DragEvent>() {
+    node.node().setOnDragDropped(new EventHandler<DragEvent>() {
       @Override
       public void handle(DragEvent event) {
         Dragboard db = event.getDragboard();
@@ -55,7 +54,7 @@ public abstract class FxFileDropper {
     if (fileList.size() > 0) dropped(fileList.get(0));
     
     // 外からドロップするとフォーカスが失われてしまう。
-    node.getScene().getWindow().requestFocus();
+    node.node().getScene().getWindow().requestFocus();
   }
   
   protected void dropped(File file) {

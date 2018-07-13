@@ -3,7 +3,6 @@ package com.cm55.fxlib;
 import java.util.function.*;
 
 import javafx.beans.value.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.stage.*;
@@ -17,15 +16,15 @@ public class FxProgressMessageDialog {
   private Alert dialog;
   private boolean programaticallyClosed;
   
-  public FxProgressMessageDialog(Node node, String message) {
+  public FxProgressMessageDialog(FxNode node, String message) {
     this(node, message, null);
   }
   
-  public FxProgressMessageDialog(Node node, String message, Consumer<ButtonType> cancelCallback) {
+  public FxProgressMessageDialog(FxNode node, String message, Consumer<ButtonType> cancelCallback) {
     dialog = new Alert(AlertType.INFORMATION, message, ButtonType.CANCEL);
     dialog.setTitle("Waiting");
     dialog.setHeaderText("Please wait for a while");
-    dialog.initOwner(node.getScene().getWindow());
+    dialog.initOwner(node.node().getScene().getWindow());
     dialog.initModality(Modality.NONE);
     if (cancelCallback != null) handleCancel(cancelCallback);
   }

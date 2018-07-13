@@ -13,7 +13,7 @@ public abstract class FxOkCancelDlg<I, R> {
   public FxOkCancelDlg() {
   }
   
-  protected boolean initialize(Node node) {
+  protected boolean initialize(FxNode node) {
     if (dialog != null) return false;
     dialog = new Dialog<R>();    
     dialog.setTitle(getTitle());
@@ -34,7 +34,7 @@ public abstract class FxOkCancelDlg<I, R> {
   
   private R result = null;
   
-  protected R showAndWait(Node node, I input) {
+  protected R showAndWait(FxNode node, I input) {
     initialize(node);
     setInput(input);
     result = null;

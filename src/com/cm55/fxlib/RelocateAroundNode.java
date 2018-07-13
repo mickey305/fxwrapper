@@ -3,7 +3,6 @@ package com.cm55.fxlib;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 
@@ -11,7 +10,7 @@ public abstract class RelocateAroundNode {
   
   public static class ForStage extends RelocateAroundNode {
     private Stage stage;
-    public ForStage(Node node, Stage stage) {
+    public ForStage(FxNode node, Stage stage) {
       super(node, stage.widthProperty(), stage.heightProperty());
       this.stage = stage;
       if (stage.isShowing()) {
@@ -26,7 +25,7 @@ public abstract class RelocateAroundNode {
   
   public static class ForDialog extends RelocateAroundNode {
     private Dialog<?> dialog;
-    public ForDialog(Node node, Dialog<?> dialog) {
+    public ForDialog(FxNode node, Dialog<?> dialog) {
       super(node, dialog.widthProperty(), dialog.heightProperty());
       this.dialog = dialog;
       if (dialog.isShowing()) {
@@ -39,7 +38,7 @@ public abstract class RelocateAroundNode {
     protected void setY(double y) { dialog.setY(y); }  
   }
   
-  private Node node;
+  private FxNode node;
   private ReadOnlyDoubleProperty windowWidthProperty;
   private ReadOnlyDoubleProperty windowHeightProperty;
   private ChangeListener<Number>changeListener = null;
@@ -47,7 +46,7 @@ public abstract class RelocateAroundNode {
   protected abstract void setX(double x);
   protected abstract void setY(double y);
   
-  protected RelocateAroundNode(Node node, ReadOnlyDoubleProperty width, ReadOnlyDoubleProperty height) {
+  protected RelocateAroundNode(FxNode node, ReadOnlyDoubleProperty width, ReadOnlyDoubleProperty height) {
     this.node = node;
     this.windowWidthProperty = width;
     this.windowHeightProperty = height;
@@ -78,7 +77,7 @@ public abstract class RelocateAroundNode {
     double windowWidth = windowWidthProperty.get();
     double windowHeight = windowHeightProperty.get();
     
-    Bounds nodeB = node.localToScreen(node.getBoundsInLocal());
+    Bounds nodeB = node.node().localToScreen(node.node().getBoundsInLocal());
     double nodeCenterX = (nodeB.getMinX() + nodeB.getMaxX()) / 2;
     double nodeCenterY = (nodeB.getMinY() + nodeB.getMaxY()) / 2;
     

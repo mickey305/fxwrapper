@@ -6,7 +6,7 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 
-public abstract class FxBox<T extends FxBox<T>> {
+public abstract class FxBox<T extends FxBox<T>> implements FxNode {
 
   private Region region;
   private ObservableList<Node>children;
@@ -50,6 +50,10 @@ public abstract class FxBox<T extends FxBox<T>> {
   public abstract DoubleProperty spacingProperty();
   
   public Region getRegion() {
+    return region;
+  }
+  
+  public Region node() {
     return region;
   }
 }

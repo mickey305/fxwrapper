@@ -1,7 +1,6 @@
 package com.cm55.fxlib;
 
 import javafx.application.*;
-import javafx.scene.*;
 
 /**
  * 時間のかかる処理、あるいはハングアップの可能性のある処理を別スレッドで実行し、その間キャンセルダイアログを表示する。
@@ -14,7 +13,7 @@ public abstract class FxCancellableThreadedDialog {
    * メッセージを指定して実行する
    * @param message
    */
-  public FxCancellableThreadedDialog(Node node, String message) {
+  public FxCancellableThreadedDialog(FxNode node, String message) {
     
     FxProgressMessageDialog progress = new FxProgressMessageDialog(node, message);
     

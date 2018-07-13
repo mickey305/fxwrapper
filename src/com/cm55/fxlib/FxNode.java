@@ -14,4 +14,8 @@ public interface FxNode {
       return node;
     }
   }
+  
+  public static Wrapper wrap(Node node) {
+    return new Wrapper(node);
+  }
 }

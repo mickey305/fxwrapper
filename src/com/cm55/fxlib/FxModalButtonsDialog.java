@@ -1,6 +1,5 @@
 package com.cm55.fxlib;
 
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 
@@ -12,12 +11,12 @@ import javafx.stage.*;
  */
 public class FxModalButtonsDialog {
 
-  protected Node node;
+  protected FxNode node;
   protected Dialog<Integer> dialog;
   protected Window window;
   protected DialogPane dialogPane;
   
-  public void setup(Node node, String title, String message, String[]buttonLabels) {
+  public void setup(FxNode node, String title, String message, String[]buttonLabels) {
     this.node = node;
     FxHBox hbox = new FxHBox();
     for (int i = 0; i < buttonLabels.length; i++) {
@@ -28,7 +27,7 @@ public class FxModalButtonsDialog {
     hbox.setSpacing(10);
     dialog = new Dialog<Integer>();
     dialog.setTitle(title);
-    dialog.initOwner(node.getScene().getWindow());
+    dialog.initOwner(node.node().getScene().getWindow());
     dialog.initModality(Modality.WINDOW_MODAL);   
     dialogPane = dialog.getDialogPane();    
     dialogPane.setContent(new FxVBox(new Label(message), hbox.getRegion()).setSpacing(10).getRegion());

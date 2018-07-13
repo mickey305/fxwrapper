@@ -62,9 +62,9 @@ public class FxFileChooser {
     return this;
   }
   
-  public File showSaveDialog(Node node) {
+  public File showSaveDialog(FxNode node) {
     Window window = null;
-    if (node != null) window = node.getScene().getWindow();
+    if (node != null) window = node.node().getScene().getWindow();
     return showSaveDialog(window);
   }
   

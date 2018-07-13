@@ -18,7 +18,7 @@ import javafx.scene.layout.*;
  * どこかにaddする場合はgetRegion()を取得すること。
  * @author admin
  */
-public class FxRichTextArea {
+public class FxRichTextArea implements FxNode {
 
   private StyleClassedTextArea textArea;
   private LineNumbers lineNumber;
@@ -100,6 +100,10 @@ public class FxRichTextArea {
 
   
   public StyleClassedTextArea getTextArea() {
+    return textArea;
+  }
+  
+  public StyleClassedTextArea node() {
     return textArea;
   }
   

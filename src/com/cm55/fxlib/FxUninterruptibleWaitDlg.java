@@ -1,7 +1,6 @@
 package com.cm55.fxlib;
 
 import javafx.application.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 import javafx.stage.*;
@@ -30,10 +29,10 @@ public class FxUninterruptibleWaitDlg {
    * @param message メッセージ
    * @param appModal true:アプリケーションモーダル、false:ウインドウモーダル
    */
-  public FxUninterruptibleWaitDlg(Node node, String message, boolean appModal) {      
+  public FxUninterruptibleWaitDlg(FxNode node, String message, boolean appModal) {      
     dialog = new Alert(AlertType.INFORMATION, message);
     dialog.getDialogPane().getButtonTypes().clear();
-    dialog.initOwner(node.getScene().getWindow());
+    dialog.initOwner(node.node().getScene().getWindow());
     dialog.setTitle("Waiting");
     dialog.setHeaderText("Please wait for a while");
     if (appModal) dialog.initModality(Modality.APPLICATION_MODAL);

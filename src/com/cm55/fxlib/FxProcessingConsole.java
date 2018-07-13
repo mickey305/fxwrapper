@@ -2,7 +2,6 @@ package com.cm55.fxlib;
 
 import javafx.application.*;
 import javafx.beans.value.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 
 /**
@@ -24,7 +23,7 @@ public class FxProcessingConsole extends FxModelessCancellableDialog {
    * タイトルを指定して作成する。
    * @param title
    */
-  public FxProcessingConsole(Node node, String title) {
+  public FxProcessingConsole(FxNode node, String title) {
     super(node);
     dialog.setTitle(title);
     dialogPane.setPrefWidth(WIDTH);
@@ -37,7 +36,7 @@ public class FxProcessingConsole extends FxModelessCancellableDialog {
       public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
         if (!newValue) return;
         Platform.runLater(()-> {
-          node.getScene().getWindow().requestFocus();
+          node.node().getScene().getWindow().requestFocus();
         });
       }      
     });

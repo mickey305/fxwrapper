@@ -7,7 +7,7 @@ import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class FxRadioButtons implements FocusControl<FxRadioButtons> {
+public class FxRadioButtons implements FocusControl<FxRadioButtons>, FxNode {
 
   public static class Hor extends FxRadioButtons {
     public Hor(String...captions) {
@@ -128,6 +128,10 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons> {
 
   /** Paneを取得する */
   public Region getPane() {
+    return box.getRegion();
+  }
+  
+  public Region node() {
     return box.getRegion();
   }
 }
