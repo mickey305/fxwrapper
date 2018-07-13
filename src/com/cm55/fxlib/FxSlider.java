@@ -6,7 +6,7 @@ import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.scene.control.*;
 
-public class FxSlider implements FocusControl<FxSlider> {
+public class FxSlider implements FocusControl<FxSlider>, FxNode {
 
   private Slider slider;
   
@@ -55,7 +55,7 @@ public class FxSlider implements FocusControl<FxSlider> {
     return this;
   }
   
-  public Control getControl() {
+  public Control node() {
     return slider;
   }
   

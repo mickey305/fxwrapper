@@ -7,7 +7,7 @@ import javafx.event.*;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 
-public class FxTextField implements FocusControl<FxTextField> {
+public class FxTextField implements FocusControl<FxTextField>, FxNode {
 
   private TextField textField;
   private Consumer<String>textChangedCallback;
@@ -36,7 +36,7 @@ public class FxTextField implements FocusControl<FxTextField> {
     });
   }
   
-  public TextField getControl() {
+  public TextField node() {
     return textField;
   }
   

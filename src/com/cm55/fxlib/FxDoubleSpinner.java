@@ -10,7 +10,7 @@ import javafx.scene.control.SpinnerValueFactory.*;
  * @author admin
  *
  */
-public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
+public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner>, FxNode {
 
   private Spinner<Double> spinner;
   private DoubleSpinnerValueFactory valueFactory;
@@ -73,7 +73,7 @@ public class FxDoubleSpinner implements FocusControl<FxDoubleSpinner> {
   }
 
   /** コントロールを取得する */
-  public Spinner<Double> getControl() {
+  public Spinner<Double> node() {
     return spinner;
   }
 }

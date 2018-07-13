@@ -9,7 +9,7 @@ import javafx.scene.control.*;
  * @author admin
  *
  */
-public class FxIntSpinner implements FocusControl<FxIntSpinner> {
+public class FxIntSpinner implements FocusControl<FxIntSpinner>, FxNode {
 
   private Spinner<Integer> spinner;
   private SpinnerValueFactory<Integer>valueFactory;
@@ -76,7 +76,7 @@ public class FxIntSpinner implements FocusControl<FxIntSpinner> {
   }
 
   /** コントロールを取得する */
-  public Spinner<Integer> getControl() {
+  public Spinner<Integer> node() {
     return spinner;
   }
 }

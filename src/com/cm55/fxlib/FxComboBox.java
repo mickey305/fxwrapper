@@ -11,7 +11,7 @@ import javafx.scene.control.*;
  *
  * @param <T>
  */
-public class FxComboBox<T> implements FocusControl<FxComboBox<T>> {
+public class FxComboBox<T> implements FocusControl<FxComboBox<T>>, FxNode {
 
   /** フォーカス可能か */
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
@@ -111,7 +111,7 @@ public class FxComboBox<T> implements FocusControl<FxComboBox<T>> {
     }
   }
 
-  public ComboBox<String> getControl() {
+  public ComboBox<String> node() {
     return comboBox;
   }
   

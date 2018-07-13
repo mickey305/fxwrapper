@@ -13,7 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.scene.text.*;
 
-public class FxTextArea implements FocusControl<FxTextArea> {
+public class FxTextArea implements FocusControl<FxTextArea>, FxNode {
 
   private TextArea textArea;
   private Consumer<String>textChangedCallback;
@@ -209,7 +209,7 @@ public class FxTextArea implements FocusControl<FxTextArea> {
     if (textChangedCallback != null) textChangedCallback.accept(text);
   }
   
-  public TextArea getControl() {
+  public TextArea node() {
     return textArea;
   }
 

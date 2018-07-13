@@ -4,7 +4,7 @@ import javafx.geometry.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
 
-public class FxLabel {
+public class FxLabel implements FxNode {
 
   public static final OverrunStyle[]OVERRUN_STYLES = new OverrunStyle[] {
       OverrunStyle.WORD_ELLIPSIS, OverrunStyle.CENTER_ELLIPSIS, OverrunStyle.LEADING_ELLIPSIS        
@@ -52,7 +52,7 @@ public class FxLabel {
     return this;
   }
   
-  public Label getControl() {
+  public Label node() {
     return label;
   }
 }

@@ -3,7 +3,7 @@ package com.cm55.fxlib;
 import javafx.collections.*;
 import javafx.scene.control.*;
 
-public class FxList<E> {
+public class FxList<E> implements FxNode {
 
   private ListView<E> listView;
   private FxSingleSelectionModel<E> selectionModel;
@@ -34,7 +34,7 @@ public class FxList<E> {
     return listView.getItems();
   }
   
-  public ListView<E> getControl() {
+  public ListView<E> node() {
     return listView;
   }
 

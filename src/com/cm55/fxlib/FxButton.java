@@ -5,7 +5,7 @@ import java.util.function.*;
 import javafx.scene.control.*;
 import javafx.scene.paint.*;
 
-public class FxButton implements FocusControl<FxButton> {
+public class FxButton implements FocusControl<FxButton>, FxNode {
   
   private Button button;
   private Consumer<FxButton> action;
@@ -68,7 +68,7 @@ public class FxButton implements FocusControl<FxButton> {
     button.setMaxWidth(value);
     return this;
   }
-  public Button getControl() {
+  public Button node() {
     return button;
   }
   

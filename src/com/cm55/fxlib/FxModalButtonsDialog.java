@@ -23,7 +23,7 @@ public class FxModalButtonsDialog {
     for (int i = 0; i < buttonLabels.length; i++) {
       int index = i;
       FxButton button = new FxButton(buttonLabels[i], b->select(index));
-      hbox.add(button.getControl());
+      hbox.add(button.node());
     }
     hbox.setSpacing(10);
     dialog = new Dialog<Integer>();

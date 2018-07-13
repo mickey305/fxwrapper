@@ -7,7 +7,7 @@ import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.scene.control.*;
 
-public class FxToggleButton implements FocusControl<FxToggleButton> {
+public class FxToggleButton implements FocusControl<FxToggleButton>, FxNode {
 
   private ToggleButton button;
   private Consumer<Boolean>callback;
@@ -117,7 +117,7 @@ public class FxToggleButton implements FocusControl<FxToggleButton> {
     return this;
   }
     
-  public ToggleButton getControl() {
+  public ToggleButton node() {
     return button;
   }
 }

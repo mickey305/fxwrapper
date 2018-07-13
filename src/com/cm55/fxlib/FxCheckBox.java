@@ -7,7 +7,7 @@ import javafx.beans.value.*;
 import javafx.event.*;
 import javafx.scene.control.*;
 
-public class FxCheckBox implements FocusControl<FxCheckBox> {
+public class FxCheckBox implements FocusControl<FxCheckBox>, FxNode {
 
   private CheckBox button;
   private Consumer<Boolean>callback;
@@ -112,7 +112,7 @@ public class FxCheckBox implements FocusControl<FxCheckBox> {
     return this;
   }
     
-  public CheckBox getControl() {
+  public CheckBox node() {
     return button;
   }
 }

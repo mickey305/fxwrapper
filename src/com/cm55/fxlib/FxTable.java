@@ -25,7 +25,7 @@ import javafx.util.converter.*;
  *
  * @param <E>
  */
-public class FxTable<E> implements FocusControl<FxTable<E>> {
+public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
 
   private TableView<E> tableView;
   private FxObservableList<E> rows;
@@ -163,7 +163,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
   }
 
   /** TableViewコントロールを取得  */
-  public Control getControl() {
+  public Control node() {
     return tableView;
   }
 
@@ -470,7 +470,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
               setGraphic(null);
               return;       
             }
-            setGraphic(button.getControl());                
+            setGraphic(button.node());                
           }
         };        
         return cell;
@@ -504,7 +504,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
           BooleanProperty enabled = (BooleanProperty) column.getCellObservableValue(getIndex());
           button.setEnabled(enabled.get());
           enabledChanged(button, enabled.get());
-          setGraphic(button.getControl());                
+          setGraphic(button.node());                
         }        
       });
     }
@@ -540,7 +540,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>> {
             wrapper.set(value);
             if (e != null) e.selected(getIndex(), value);
           });
-          setGraphic(combo.getControl());
+          setGraphic(combo.node());
           setText(null);            
         }          
       });
