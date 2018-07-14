@@ -164,6 +164,10 @@ public class FxSplitPane implements FxNode {
   /** 現在のパーツ用のピクセルサイズを設定する */
   public void setPartSizes(double[]sizes) {   
     if (tracking) System.out.println("setPartSizes targetAvail " + adapter.targetAvail);
+    for (int i = 0; i < sizes.length; i++) {
+      // 誤動作でNaNが入ってしまうことがある。
+      if (Double.isNaN(sizes[i])) sizes[i] = 1; 
+    }
     Arrays.stream(allParts).forEach(p-> {      
       p.layoutSize = null;
       p.layoutRatio = null;
