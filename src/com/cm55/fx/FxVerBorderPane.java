@@ -1,7 +1,6 @@
 package com.cm55.fx;
 
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.layout.*;
 
 public class FxVerBorderPane implements FxNode {

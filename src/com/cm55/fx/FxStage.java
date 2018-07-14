@@ -4,7 +4,6 @@ import java.util.function.*;
 
 import javafx.beans.property.*;
 import javafx.beans.value.*;
-import javafx.scene.*;
 import javafx.stage.*;
 
 public class FxStage {

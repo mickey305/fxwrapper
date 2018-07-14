@@ -2,8 +2,6 @@ package com.cm55.fx.splitPane;
 
 import com.cm55.fx.*;
 
-import javafx.scene.*;
-
 /**
  * マウスのドラッグでレイアウトを行う。レイアウト対象はディバイダの左右あるいは上下に限られる。それ以外は何もされない 両者のminSize,
  * maxSizeが加味される。prefSizeは無視される。

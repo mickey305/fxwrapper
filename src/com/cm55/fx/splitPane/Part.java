@@ -2,8 +2,6 @@ package com.cm55.fx.splitPane;
 
 import com.cm55.fx.*;
 
-import javafx.scene.*;
-
 /** 
  * {@link WholeLayouter}の方針を決定するノードごとのレイアウト情報
  * Paneのサイズが変更された場合の各ノードのサイズ保持の優先順としては以下。

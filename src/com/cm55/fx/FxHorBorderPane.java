@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.*;
 
 import javafx.geometry.*;
-import javafx.scene.Node;
 import javafx.scene.layout.*;
 
 public class FxHorBorderPane implements FxNode {

@@ -4,8 +4,6 @@ import java.util.*;
 
 import com.cm55.fx.*;
 
-import javafx.scene.*;
-
 /**
  * 全体のレイアウトを行う
  * <p>

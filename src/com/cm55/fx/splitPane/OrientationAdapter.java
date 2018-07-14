@@ -5,7 +5,6 @@ import com.cm55.fx.*;
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.collections.*;
-import javafx.scene.*;
 import javafx.scene.layout.*;
 
 public abstract class OrientationAdapter {

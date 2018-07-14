@@ -2,7 +2,6 @@ package com.cm55.fx;
 
 import javafx.beans.property.*;
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.layout.*;
 
 public class FxVBox extends FxBox<FxVBox> {

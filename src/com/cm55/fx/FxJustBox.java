@@ -1,6 +1,5 @@
 package com.cm55.fx;
 
-import javafx.scene.*;
 import javafx.scene.layout.*;
 
 public class FxJustBox implements FxNode {

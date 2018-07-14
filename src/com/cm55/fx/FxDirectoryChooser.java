@@ -2,7 +2,6 @@ package com.cm55.fx;
 
 import java.io.*;
 
-import javafx.scene.*;
 import javafx.stage.*;
 
 public class FxDirectoryChooser {
