@@ -16,6 +16,23 @@ public class FxVerBorderPane implements FxNode {
     if (bottom != null) pane.setBottom(bottom.node());
   }
   
+  public FxVerBorderPane() {
+    pane = new BorderPane();
+    nodes = new FxNode[3];
+  }
+  
+  public void setCenter(FxNode center) {
+    pane.setCenter((nodes[1] = center).node());
+  }
+  
+  public void setBottom(FxNode bottom) {
+    pane.setBottom((nodes[2] = bottom).node());
+  }
+  
+  public void setTop(FxNode top) {
+    pane.setTop((nodes[0] = top).node());
+  }
+  
   public FxVerBorderPane setTopMargin(int value) {
     setMargin(0, value);
     return this;
