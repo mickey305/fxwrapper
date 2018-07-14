@@ -1,4 +1,4 @@
-import com.cm55.fxlib.*;
+import com.cm55.fx.*;
 
 public class MainPanel {
 

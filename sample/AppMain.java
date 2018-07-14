@@ -1,6 +1,6 @@
 
 
-import com.cm55.fxlib.*;
+import com.cm55.fx.*;
 
 import javafx.application.*;
 import javafx.stage.*;
