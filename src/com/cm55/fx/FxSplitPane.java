@@ -202,7 +202,7 @@ public class FxSplitPane implements FxNode {
   private void hideElement(Element e) {
     Part part = e.part;
     visibleParts.remove(part);
-    paneChildren.remove(part.node);
+    paneChildren.remove(part.node.node());
     if (paneChildren.size() == 0) return;
     paneChildren.remove(dividers.remove(0));
   }
