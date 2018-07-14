@@ -27,8 +27,8 @@ public class FxDirectoryChooser {
     return this;
   }
   
-  public File showDialog(Node node) {
-    return showDialog(node.getScene().getWindow());
+  public File showDialog(FxNode node) {
+    return showDialog(node.node().getScene().getWindow());
   }
   
   public File showDialog(Window window) {

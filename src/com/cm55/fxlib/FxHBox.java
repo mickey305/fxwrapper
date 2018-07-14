@@ -15,7 +15,7 @@ public class FxHBox extends FxBox<FxHBox> {
     hbox.setAlignment(Pos.CENTER);
   }
 
-  public FxHBox(Node...nodes) {
+  public FxHBox(FxNode...nodes) {
     this();
     addAll(nodes);
   }

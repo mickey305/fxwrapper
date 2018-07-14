@@ -1,5 +1,7 @@
 package com.cm55.fxlib;
 
+import java.util.*;
+
 import javafx.beans.property.*;
 import javafx.collections.*;
 import javafx.geometry.*;
@@ -24,14 +26,14 @@ public abstract class FxBox<T extends FxBox<T>> implements FxNode {
   }
   
   @SuppressWarnings("unchecked")
-  public T add(Node node) {
-    children.add(node);
+  public T add(FxNode node) {
+    children.add(node.node());
     return (T)this;
   }
   
   @SuppressWarnings("unchecked")
-  public T addAll(Node...nodes) {
-    children.addAll(nodes);
+  public T addAll(FxNode...nodes) {
+    Arrays.stream(nodes).forEach(node->children.add(node.node()));
     return (T)this;
   }
   

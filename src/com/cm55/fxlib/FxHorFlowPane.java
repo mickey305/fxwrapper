@@ -4,7 +4,7 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 
-public class FxHorFlowPane {
+public class FxHorFlowPane implements FxNode {
 
   private FlowPane flowPane;
   
@@ -26,6 +26,10 @@ public class FxHorFlowPane {
   }
   
   public FlowPane getPane() {
+    return flowPane;
+  }
+  
+  public FlowPane node() {
     return flowPane;
   }
 }

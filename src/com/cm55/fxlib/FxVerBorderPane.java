@@ -4,17 +4,17 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 
-public class FxVerBorderPane {
+public class FxVerBorderPane implements FxNode {
 
   private BorderPane pane;
-  private Node[]nodes;
+  private FxNode[]nodes;
   
-  public FxVerBorderPane(Node top, Node center, Node bottom) {
+  public FxVerBorderPane(FxNode top, FxNode center, FxNode bottom) {
     pane = new BorderPane();
-    nodes = new Node[] { top, center, bottom };
-    if (top != null) pane.setTop(top);
-    if (center != null) pane.setCenter(center);
-    if (bottom != null) pane.setBottom(bottom);
+    nodes = new FxNode[] { top, center, bottom };
+    if (top != null) pane.setTop(top.node());
+    if (center != null) pane.setCenter(center.node());
+    if (bottom != null) pane.setBottom(bottom.node());
   }
   
   public FxVerBorderPane setTopMargin(int value) {
@@ -34,11 +34,14 @@ public class FxVerBorderPane {
   
   @SuppressWarnings("static-access")
   private void setMargin(int index, int value) {
-    pane.setMargin(nodes[index],  new Insets(value, value, value, value));
+    pane.setMargin(nodes[index].node(),  new Insets(value, value, value, value));
   }
   
   
   public BorderPane getPane() {
+    return pane;
+  }
+  public BorderPane node() {
     return pane;
   }
 }

@@ -28,7 +28,7 @@ public abstract class FxCloseDlg<I, R> {
   
   private R result = null;
   
-  public R showAndWait(Node node, I input) {
+  public R showAndWait(FxNode node, I input) {
     initialize();
     setInput(input);
     result = null;

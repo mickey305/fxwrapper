@@ -1,5 +1,7 @@
 package com.cm55.fxlib.splitPane;
 
+import com.cm55.fxlib.*;
+
 import javafx.scene.*;
 
 /** 
@@ -24,7 +26,7 @@ public class Part {
   public int order;
   
   /** ノード */
-  public Node node;
+  public FxNode node;
   
   /** 画面のリサイズに際してサイズ固定 */
   public boolean resizeFixed;
@@ -35,7 +37,7 @@ public class Part {
   /** レイアウト比率を保持する。なければnull */
   public Double layoutRatio;
   
-  public Part(int order, Node node) {
+  public Part(int order, FxNode node) {
     this.order = order;
     if (node == null) throw new NullPointerException();
     this.node = node;

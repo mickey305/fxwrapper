@@ -2,6 +2,8 @@ package com.cm55.fxlib.splitPane;
 
 import java.util.*;
 
+import com.cm55.fxlib.*;
+
 import javafx.scene.*;
 
 /**
@@ -80,7 +82,7 @@ public class WholeLayouter {
     List<Part>notModified = new ArrayList<Part>();
     double modifiedTotal = 0;
     for (Part part: parts) {
-      Node node = part.node;
+      FxNode node = part.node;
       part.layoutSize = realAvail * part.layoutRatio / totalRatio;
       double min = adapter.minSize(node);
       double max = adapter.maxSize(node);
@@ -109,7 +111,7 @@ public class WholeLayouter {
     double position = 0;
     for (int index = 0; index < parts.size(); index++) {
       Part part = parts.get(index);
-      Node node = part.node;
+      FxNode node = part.node;
       adapter.relocate(node, position);
       adapter.resize(node, part.layoutSize);
       if (tracking) System.out.println("" + position + "," + part.layoutSize);

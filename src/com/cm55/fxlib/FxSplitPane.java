@@ -18,13 +18,13 @@ import javafx.scene.layout.*;
 public class FxSplitPane implements FxNode {
   
   public static class Hor extends FxSplitPane {
-    public Hor(Node... nodes) {
+    public Hor(FxNode... nodes) {
       super(true, nodes);
     }
   }
   
   public static class Ver extends FxSplitPane {
-    public Ver(Node... nodes) {
+    public Ver(FxNode... nodes) {
       super(false, nodes);
     }
   }
@@ -51,7 +51,7 @@ public class FxSplitPane implements FxNode {
   private OrientationAdapter adapter;
   private boolean tracking;
   
-  public FxSplitPane(boolean horizontal, Node... nodes) {
+  public FxSplitPane(boolean horizontal, FxNode... nodes) {
     dividerThickness.set(7);
     this.horizontal = horizontal;
 
@@ -63,7 +63,7 @@ public class FxSplitPane implements FxNode {
     pane = new SplitPaneView(horizontal, visibleParts, dividers, dividerThickness);
     paneChildren = pane.getChildren();
     
-    visibleParts.forEach(part-> paneChildren.add(part.node));
+    visibleParts.forEach(part-> paneChildren.add(part.node.node()));
     dividers.forEach(divider->paneChildren.add(divider));
 
     if (horizontal) adapter = new HorizontalAdapter(pane, dividers, dividerThickness, spacing);
@@ -82,11 +82,11 @@ public class FxSplitPane implements FxNode {
    * @param node
    * @return
    */
-  private Part ensurePart(int index, Node node) {
-    Part part = (Part) node.getProperties().get(SPLITTED_PART);
+  private Part ensurePart(int index, FxNode node) {
+    Part part = (Part) node.node().getProperties().get(SPLITTED_PART);
     if (part == null) {
       part = new Part(index, node);
-      node.getProperties().put(SPLITTED_PART, part);
+      node.node().getProperties().put(SPLITTED_PART, part);
     } else {
       part.order = index;
     }
@@ -190,7 +190,7 @@ public class FxSplitPane implements FxNode {
       }
     }
     visibleParts.add(index, part);
-    paneChildren.add(part.node);
+    paneChildren.add(part.node.node());
     if (paneChildren.size() == 1) return;
     Divider divider = createDivider();
     dividers.add(divider);
@@ -228,7 +228,7 @@ public class FxSplitPane implements FxNode {
         pane.setDragLayouter(new DragLayouter(
           adapter,
           visibleParts.get(index), 
-          divider, 
+          FxNode.wrap(divider), 
           visibleParts.get(index + 1)
         ));
       }

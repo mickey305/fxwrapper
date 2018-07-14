@@ -58,7 +58,7 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons>, FxNode {
       };
       radioButtons[i] = button;
       button.setToggleGroup(buttonGroup);
-      box.add(button);
+      box.add(FxNode.wrap(button));
     }
     
     buttonGroup.selectedToggleProperty().addListener((ov, old_toggle,new_toggle) -> {

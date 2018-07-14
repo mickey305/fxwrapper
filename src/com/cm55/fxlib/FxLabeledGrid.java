@@ -5,7 +5,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
-public class FxLabeledGrid {
+public class FxLabeledGrid implements FxNode {
 
   private GridPane grid;
   private int row;
@@ -38,6 +38,10 @@ public class FxLabeledGrid {
   }
 
   public Pane getPane() {
+    return grid;
+  }
+  
+  public Node node() {
     return grid;
   }
 }

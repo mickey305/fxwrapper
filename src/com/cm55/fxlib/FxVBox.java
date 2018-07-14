@@ -15,7 +15,7 @@ public class FxVBox extends FxBox<FxVBox> {
     vbox.setAlignment(Pos.CENTER);
   }
 
-  public FxVBox(Node...nodes) {
+  public FxVBox(FxNode...nodes) {
     this();
     addAll(nodes);
   }

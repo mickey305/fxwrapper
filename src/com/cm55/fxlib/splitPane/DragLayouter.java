@@ -1,5 +1,7 @@
 package com.cm55.fxlib.splitPane;
 
+import com.cm55.fxlib.*;
+
 import javafx.scene.*;
 
 /**
@@ -10,15 +12,15 @@ public class DragLayouter {
   
   private Part leftPart;
   private Part rightPart;
-  private Node left;
+  private FxNode left;
   private double leftInit;
-  private Node divider;
-  private Node right;
+  private FxNode divider;
+  private FxNode right;
   private double rightInit;
   private double move;
   private OrientationAdapter adapter;
   
-  public DragLayouter(OrientationAdapter adapter, Part leftPart, Node divider, Part rightPart) {
+  public DragLayouter(OrientationAdapter adapter, Part leftPart, FxNode divider, Part rightPart) {
     this.adapter = adapter;
     this.leftPart = leftPart;
     this.rightPart = rightPart;

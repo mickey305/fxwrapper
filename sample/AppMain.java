@@ -1,10 +1,12 @@
 
 
+import com.cm55.fxlib.*;
+
 import javafx.application.*;
 import javafx.stage.*;
 
 
-public class Main extends Application {
+public class AppMain extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
@@ -16,13 +18,13 @@ public class Main extends Application {
     // コマンドラインパラメータを取得
     Parameters params = getParameters();
     
-    // メニューパネルの実行
- //   injector.getInstance(MenuPanel.class).execute(params, getHostServices(), stage);
+    // メインパネルの実行
+    new MainPanel(new FxStage(stage));
   }
   
   public static void main(String[] args) {  
     
     // JavaFXアプリのラウンチ、コマンドラインパラメータを引き渡す
-    Application.launch(Main.class, args);
+    Application.launch(AppMain.class, args);
   }
 }

@@ -62,43 +62,43 @@ public class SplitPaneView extends Pane {
   @Override
   protected double computeMinWidth(double height) {
     if (horizontal) 
-      return parts.stream().mapToDouble(part->part.node.minWidth(height)).sum() + dividers.size() * dividerThickness.get();
+      return parts.stream().mapToDouble(part->part.node.node().minWidth(height)).sum() + dividers.size() * dividerThickness.get();
     else
-      return parts.stream().mapToDouble(part->part.node.minWidth(height)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().minWidth(height)).max().orElse(0);
   }
   @Override
   protected double computeMaxWidth(double height) {
     if (horizontal)
-      return parts.stream().mapToDouble(part->part.node.maxWidth(height)).sum() +  + dividers.size() * dividerThickness.get();
+      return parts.stream().mapToDouble(part->part.node.node().maxWidth(height)).sum() +  + dividers.size() * dividerThickness.get();
     else 
-      return parts.stream().mapToDouble(part->part.node.maxWidth(height)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().maxWidth(height)).max().orElse(0);
   }
   @Override
   protected double computeMinHeight(double width) {
     if (horizontal)
-      return parts.stream().mapToDouble(part->part.node.minHeight(width)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().minHeight(width)).max().orElse(0);
     else 
-      return parts.stream().mapToDouble(part->part.node.minHeight(width)).sum() + dividers.size() * dividerThickness.get();
+      return parts.stream().mapToDouble(part->part.node.node().minHeight(width)).sum() + dividers.size() * dividerThickness.get();
   }
   @Override
   protected double computeMaxHeight(double width) {
     if (horizontal)
-      return parts.stream().mapToDouble(part->part.node.maxHeight(width)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().maxHeight(width)).max().orElse(0);
     else
-      return parts.stream().mapToDouble(part->part.node.maxHeight(width)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().maxHeight(width)).max().orElse(0);
   }
   @Override
   protected double computePrefWidth(double height) {
     if (horizontal)
-      return parts.stream().mapToDouble(part->part.node.prefWidth(height)).sum() + dividers.size() * dividerThickness.get();
+      return parts.stream().mapToDouble(part->part.node.node().prefWidth(height)).sum() + dividers.size() * dividerThickness.get();
     else
-      return parts.stream().mapToDouble(part->part.node.prefWidth(height)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().prefWidth(height)).max().orElse(0);
   }
   @Override
   protected double computePrefHeight(double width) {
     if (horizontal)
-      return parts.stream().mapToDouble(part->part.node.prefHeight(width)).max().orElse(0);
+      return parts.stream().mapToDouble(part->part.node.node().prefHeight(width)).max().orElse(0);
     else
-      return parts.stream().mapToDouble(part->part.node.prefHeight(width)).sum() + dividers.size() * dividerThickness.get();
+      return parts.stream().mapToDouble(part->part.node.node().prefHeight(width)).sum() + dividers.size() * dividerThickness.get();
   }      
 }

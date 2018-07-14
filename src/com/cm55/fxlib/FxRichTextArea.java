@@ -34,7 +34,7 @@ public class FxRichTextArea implements FxNode {
   public FxRichTextArea() {
     createTextArea();
     createScrollPane();
-    unmanageChild = new FxUnmanageChild(scrollPane);
+    unmanageChild = new FxUnmanageChild(FxNode.wrap(scrollPane));
   }
 
   /**
@@ -42,7 +42,7 @@ public class FxRichTextArea implements FxNode {
    * @return
    */
   public Region getRegion() {
-    return unmanageChild;
+    return unmanageChild.node();
   }
   
   /** フォントサイズを設定する */

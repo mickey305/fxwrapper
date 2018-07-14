@@ -22,7 +22,7 @@ public class FxModalButtonsDialog {
     for (int i = 0; i < buttonLabels.length; i++) {
       int index = i;
       FxButton button = new FxButton(buttonLabels[i], b->select(index));
-      hbox.add(button.node());
+      hbox.add(button);
     }
     hbox.setSpacing(10);
     dialog = new Dialog<Integer>();
@@ -30,7 +30,9 @@ public class FxModalButtonsDialog {
     dialog.initOwner(node.node().getScene().getWindow());
     dialog.initModality(Modality.WINDOW_MODAL);   
     dialogPane = dialog.getDialogPane();    
-    dialogPane.setContent(new FxVBox(new Label(message), hbox.getRegion()).setSpacing(10).getRegion());
+    dialogPane.setContent(
+        new FxVBox(new FxLabel(message), hbox).setSpacing(10).node()
+    );
     window = dialogPane.getScene().getWindow();
   }
 

@@ -9,7 +9,7 @@ import javafx.stage.*;
 
 public class FxStage {
 
-  private Stage stage;
+  private final Stage stage;
   
   private SimpleBooleanProperty showingProperty = new SimpleBooleanProperty();
   public SimpleBooleanProperty showingProperty() { return showingProperty; }
@@ -19,10 +19,17 @@ public class FxStage {
   private Consumer<FxStage>onHidingCallback;
   private Consumer<Boolean>onFocusChanged;
   
-  public FxStage() {
- 
+  public FxStage(Stage stage) {
+    this.stage = stage;
+    init();
+  }
+  
+  public FxStage() { 
     stage = new Stage();
-    
+    init();
+  }
+  
+  private void init() {
     // 表示直前のコールバック
     stage.setOnShowing(e-> {
       if (onShowingCallback != null) onShowingCallback.accept(this);
@@ -74,8 +81,8 @@ public class FxStage {
   }
   
   /** シーンを設定*/
-  public FxStage setScene(Scene scene) {
-    stage.setScene(scene);
+  public FxStage setScene(FxScene scene) {
+    stage.setScene(scene.scene);
     return this;
   }
 

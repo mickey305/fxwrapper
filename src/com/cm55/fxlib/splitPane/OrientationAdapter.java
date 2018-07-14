@@ -1,5 +1,7 @@
 package com.cm55.fxlib.splitPane;
 
+import com.cm55.fxlib.*;
+
 import javafx.beans.property.*;
 import javafx.beans.value.*;
 import javafx.collections.*;
@@ -23,12 +25,12 @@ public abstract class OrientationAdapter {
     dividers.addListener((ListChangeListener<Divider>)(d)-> recalcPaneSize());      
     dividerThickness.addListener((ChangeListener<Number>)(ob, o, n)-> recalcPaneSize());
   }
-  abstract double prefSize(Node node);
-  abstract double minSize(Node node);
-  abstract double maxSize(Node node);
-  abstract double getPosition(Node node);
-  abstract void relocate(Node node, double position);
-  abstract void resize(Node node, double size);
+  abstract double prefSize(FxNode node);
+  abstract double minSize(FxNode node);
+  abstract double maxSize(FxNode node);
+  abstract double getPosition(FxNode node);
+  abstract void relocate(FxNode node, double position);
+  abstract void resize(FxNode node, double size);
   abstract void layoutDivider(Divider divider, double position);
   int getDividerCount() { return dividers.size(); }
   abstract void recalcPaneSize();
@@ -38,12 +40,12 @@ public abstract class OrientationAdapter {
         IntegerProperty dividerThickness, IntegerProperty spacing) {
       super(pane, dividers, dividerThickness, spacing);
     }
-    double prefSize(Node node) { return node.prefWidth(counterSize); }
-    double minSize(Node node) { return node.minWidth(counterSize); }
-    double maxSize(Node node) { return node.maxWidth(counterSize); }
-    double getPosition(Node node) { return node.getLayoutX(); }
-    void relocate(Node node, double position) { node.relocate(position, 0); }
-    void resize(Node node, double size) { node.resize(size, counterSize); }
+    double prefSize(FxNode node) { return node.node().prefWidth(counterSize); }
+    double minSize(FxNode node) { return node.node().minWidth(counterSize); }
+    double maxSize(FxNode node) { return node.node().maxWidth(counterSize); }
+    double getPosition(FxNode node) { return node.node().getLayoutX(); }
+    void relocate(FxNode node, double position) { node.node().relocate(position, 0); }
+    void resize(FxNode node, double size) { node.node().resize(size, counterSize); }
     void layoutDivider(Divider divider, double position) {
       /*
       divider.setLayoutX(position);
@@ -65,13 +67,13 @@ public abstract class OrientationAdapter {
         IntegerProperty dividerThickness, IntegerProperty spacing) {
       super(pane, dividers, dividerThickness, spacing);
     }
-    double prefSize(Node node) { return node.prefHeight(counterSize); }
-    double minSize(Node node) { return node.minHeight(counterSize); }
-    double maxSize(Node node) { return node.maxHeight(counterSize); }
-    double getPosition(Node node) { return node.getLayoutY(); }
-    void relocate(Node node, double position) { 
-      node.relocate(0,  position); }
-    void resize(Node node, double size) { node.resize(counterSize,  size); }
+    double prefSize(FxNode node) { return node.node().prefHeight(counterSize); }
+    double minSize(FxNode node) { return node.node().minHeight(counterSize); }
+    double maxSize(FxNode node) { return node.node().maxHeight(counterSize); }
+    double getPosition(FxNode node) { return node.node().getLayoutY(); }
+    void relocate(FxNode node, double position) { 
+      node.node().relocate(0,  position); }
+    void resize(FxNode node, double size) { node.node().resize(counterSize,  size); }
     void layoutDivider(Divider divider, double position) {
       /*
       divider.setLayoutX(0);
