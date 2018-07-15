@@ -2,8 +2,8 @@ import java.util.*;
 import java.util.stream.*;
 
 import com.cm55.fx.*;
+import com.cm55.fx.FxTreeView.*;
 
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class TreePanel implements FxParent {
@@ -12,7 +12,7 @@ public class TreePanel implements FxParent {
   FxTreeView<Mine> treeView;
   
   public TreePanel() {
-    treeView = new FxTreeView<Mine>(new FxTreeView.Adapter<Mine>() {
+    FxTreeView.Adapter<Mine>adapter = new FxTreeView.Adapter<Mine>() {
 
       @Override
       public String getLabel(Mine node) {
@@ -23,6 +23,12 @@ public class TreePanel implements FxParent {
       public Stream<Mine> children(Mine node) {
         return node.children.stream();        
       }      
+    };
+    
+    treeView = new FxTreeView<Mine>(adapter);
+    treeView.listen(ItemSelectionEvent.class, e-> {
+      System.out.println("" + e.item);
+      
     });
     
     Mine root = new Mine("a");

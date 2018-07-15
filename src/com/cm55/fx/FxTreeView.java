@@ -1,5 +1,6 @@
 package com.cm55.fx;
 
+import java.util.function.*;
 import java.util.stream.*;
 
 import com.cm55.eventBus.*;
@@ -32,7 +33,7 @@ public class FxTreeView<T> implements FxParent {
       public void changed(ObservableValue<? extends TreeItem<T>> observable, TreeItem<T> oldValue,
           TreeItem<T> newValue) {
         TreeItem<T> selectedItem = newValue;
-        System.out.println("" + selectedItem);
+        eventBus.dispatchEvent(new ItemSelectionEvent<T>(selectedItem.getValue()));        
       }
     });
     treeView.setCellFactory(t->new MyTreeCell<T>(adapter));
@@ -91,9 +92,13 @@ public class FxTreeView<T> implements FxParent {
     return treeView;
   }
   
+  public <E>Unlistener<E>listen(Class<E>clazz, Consumer<E>l) {
+    return eventBus.listen(clazz, l);
+  }
+  
   public static class ItemSelectionEvent<T> {
-    public final TreeItem<T>item;
-    public ItemSelectionEvent(TreeItem<T>item) {
+    public final T item;
+    public ItemSelectionEvent(T item) {
       this.item = item;
     }
   }
