@@ -1,7 +1,6 @@
 package com.cm55.fx;
 
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
@@ -27,21 +26,17 @@ public class FxLabeledGrid implements FxNode {
     return this;
   }
   
-  public FxLabeledGrid add(String title, Node node) {
+  public FxLabeledGrid add(String title, FxNode node) {
     Label label = new Label(title);
     if (labelWidth != null) 
       label.setPrefWidth(labelWidth);
     grid.add(label,  0, row);
-    grid.add(node,  1, row);
+    grid.add(node.node(),  1, row);
     row++;
     return this;
   }
-
-  public Pane getPane() {
-    return grid;
-  }
   
-  public Node node() {
+  public GridPane node() {
     return grid;
   }
 }

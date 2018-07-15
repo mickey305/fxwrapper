@@ -1,24 +1,28 @@
 package com.cm55.fx;
 
+import java.util.*;
+import java.util.stream.*;
+
 import javafx.geometry.*;
-import javafx.scene.*;
 import javafx.scene.layout.*;
 
-public class FxHorFlowPane implements FxNode {
+public class FxFlowPane implements FxNode {
 
   private FlowPane flowPane;
   
-  public FxHorFlowPane() {
+  public FxFlowPane() {
     flowPane = new FlowPane();
     flowPane.setOrientation(Orientation.HORIZONTAL);
   }
 
-  public FxHorFlowPane(Node...nodes) {
+  public FxFlowPane(FxNode...nodes) {
     this();
-    flowPane.getChildren().addAll(nodes);
+    flowPane.getChildren().addAll(
+      Arrays.stream(nodes).map(n->n.node()).collect(Collectors.toList())
+    );
   }
   
-  public FxHorFlowPane setPaddingSpacing(int value) {
+  public FxFlowPane setPaddingSpacing(int value) {
     flowPane.setPadding(new Insets(value, value, value, value));
     flowPane.setHgap(value);
     flowPane.setVgap(value);    
