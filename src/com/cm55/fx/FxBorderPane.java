@@ -63,8 +63,9 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
   }
   */
 
-  protected Stream<FxNode>stream(Position...positions) {
-    return Arrays.stream(positions).map(p->nodes[p.ordinal()]).filter(n->n != null);
+  protected Position[]exists(Position...positions) {
+    return Arrays.stream(positions).filter(p->nodes[p.ordinal()] != null)
+        .collect(Collectors.toList()).toArray(new Position[0]);
   }
 
   @SuppressWarnings("unchecked")
@@ -86,6 +87,10 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
     return pane;
   }
   
+  public T setCenter(FxNode node) {
+    return set(Position.CENTER, node);    
+  }
+  
   public static class Hor extends FxBorderPane<Hor> {
     public Hor() {}
     public Hor(FxNode left, FxNode center, FxNode right) {
@@ -94,10 +99,14 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
       set(Position.RIGHT, right);
     }
     public Hor setSpacing(int value) {
-      List<FxNode>list = stream(Position.LEFT, Position.CENTER, Position.RIGHT).collect(Collectors.toList());
-      for (int i = 0; i < list.size() - 1; i++)
-        BorderPane.setMargin(list.get(i).node(), new Insets(0, value, 0, 0));   
+      Position[]positions = exists(Position.LEFT, Position.CENTER, Position.RIGHT);
+      for (int i = 0; i < positions.length - 1; i++)
+        setMargin(positions[i], new Insets(0, value, 0, 0));   
       return this;                
+    }
+    public Hor setRightMargin(Insets insets) {
+      setMargin(Position.RIGHT, insets);
+      return this;
     }
   }
   
@@ -109,10 +118,16 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
       set(Position.BOTTOM, bottom);
     }
     public Ver setSpacing(int value) {
-      List<FxNode>list = stream(Position.TOP, Position.CENTER, Position.BOTTOM).collect(Collectors.toList());
-      for (int i = 0; i < list.size() - 1; i++)
-        BorderPane.setMargin(list.get(i).node(), new Insets(0, 0, value, 0));   
-      return this;                
+      Position[]positions = exists(Position.TOP, Position.CENTER, Position.BOTTOM);
+      for (int i = 0; i < positions.length - 1; i++)
+        setMargin(positions[i], new Insets(0, 0, value, 0));   
+      return this;                   
+    }
+    public Ver setTop(FxNode node) {
+      return set(Position.TOP, node);
+    }
+    public Ver setBottom(FxNode node) {
+      return set(Position.BOTTOM, node);
     }
   }
 }
