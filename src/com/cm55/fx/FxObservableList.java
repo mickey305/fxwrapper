@@ -3,6 +3,7 @@ package com.cm55.fx;
 import java.util.*;
 import java.util.function.*;
 
+import com.cm55.eventBus.*;
 //Java9コンパイラはエラーを出すが使用可能
 import com.sun.javafx.collections.*;
 
@@ -12,9 +13,7 @@ import javafx.collections.*;
 @SuppressWarnings("restriction")
 public class FxObservableList<E> extends ObservableListWrapper<E> {
 
-  private FxEventType<FxObservableListChanged>LIST_CHANGED = new FxEventType<>();
-  private FxEventType<FxObservableListAboutToRemove>ABOUT_TO_REMOVE = new FxEventType<>();
-  private FxEventer eventer = new FxEventer();
+  private EventBus eventBus = new EventBus();
   
   private boolean noEvent;
   
@@ -33,13 +32,13 @@ public class FxObservableList<E> extends ObservableListWrapper<E> {
             }
           } else if (c.wasUpdated()) {
             // update item
-            eventer.fire(LIST_CHANGED, new FxObservableListChanged(ChangedType.UPDATE, c.getFrom(), null));
+            eventBus.dispatchEvent(new FxObservableListChanged(ChangedType.UPDATE, c.getFrom(), null));
           } else {
             for (E remitem : c.getRemoved()) {
-              eventer.fire(LIST_CHANGED, new FxObservableListChanged(ChangedType.REMOVE, null, remitem));
+              eventBus.dispatchEvent(new FxObservableListChanged(ChangedType.REMOVE, null, remitem));
             }
             for (E additem : c.getAddedSubList()) {
-              eventer.fire(LIST_CHANGED, new FxObservableListChanged(ChangedType.ADD, indexOf(additem), additem));
+              eventBus.dispatchEvent(new FxObservableListChanged(ChangedType.ADD, indexOf(additem), additem));
             }
           }
         }
@@ -48,11 +47,11 @@ public class FxObservableList<E> extends ObservableListWrapper<E> {
   }
 
   public void listenListChanged(Consumer<FxObservableListChanged>l) {
-    eventer.add(LIST_CHANGED, l);
+    eventBus.listen(FxObservableListChanged.class, l);
   }
 
   public void listenAboutToRemove(Consumer<FxObservableListAboutToRemove>l) {
-    eventer.add(ABOUT_TO_REMOVE, l);
+    eventBus.listen(FxObservableListAboutToRemove.class, l);
   }
   
   /**
@@ -135,7 +134,7 @@ public class FxObservableList<E> extends ObservableListWrapper<E> {
   }
   
   private void fireAboutToRemoveEvent() {
-    eventer.fire(ABOUT_TO_REMOVE, new FxObservableListAboutToRemove());
+    eventBus.dispatchEvent(new FxObservableListAboutToRemove());
   }
   
   /** イベントを発行しない */

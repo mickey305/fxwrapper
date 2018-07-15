@@ -3,14 +3,22 @@ package com.cm55.fx;
 
 import java.util.function.*;
 
+import com.cm55.eventBus.*;
+
 import javafx.scene.control.*;
 
 public class FxSingleSelectionModel<E> {
 
   private MultipleSelectionModel<E> selectionModel;
 
-  private FxEventer eventer = new FxEventer();
-  private FxEventType<Integer>SELECTION = new FxEventType<>();
+  private EventBus eventBus = new EventBus();
+  
+  public static class FxSingleSelection {
+    public final int value;
+    FxSingleSelection(int value) {
+      this.value = value;
+    }
+  }
   
   /** イベント発行不可フラグ */
   private boolean suppressEvent;
@@ -21,7 +29,7 @@ public class FxSingleSelectionModel<E> {
     selectionModel.selectedIndexProperty().addListener((ov, old, current) -> {
       if (suppressEvent) return;
       int index = selectionModel.getSelectedIndex();
-      eventer.fire(SELECTION,  index);
+      eventBus.dispatchEvent(new FxSingleSelection(index));
     });    
   }
   
@@ -58,8 +66,8 @@ public class FxSingleSelectionModel<E> {
     }
   }
   
-  public void listenSelection(Consumer<Integer>callback) {
-    eventer.add(SELECTION, callback);
+  public void listenSelection(Consumer<FxSingleSelection>l) {
+    eventBus.listen(FxSingleSelection.class,  l);
   }
 
 }

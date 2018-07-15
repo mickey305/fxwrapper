@@ -3,9 +3,12 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import com.cm55.eventBus.*;
+
 import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.scene.*;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 
 /**
@@ -37,8 +40,9 @@ public class FxTabPane implements FxParent {
     }
   }
 
-  private FxEventer eventer = new FxEventer();
-  private FxEventType<ChangeEvent>CHANGE_EVENT = new FxEventType<>();
+  private EventBus eventBus = new EventBus();
+
+  
   private HashMap<Node, FxNode>nodeMap = new HashMap<>();
   private Integer fixedIndex = null;
   /** なぜかイベントが二回発生してしまうため、古い方を覚えておく */
@@ -100,7 +104,7 @@ public class FxTabPane implements FxParent {
               
           // なぜかイベントが二回発生してしまうため、以前と同じなら無視
           if (newChange.equals(oldChange)) return;
-          eventer.fire(CHANGE_EVENT, oldChange = newChange);
+          eventBus.dispatchEvent(oldChange = newChange);
         }
       }
     );
@@ -109,7 +113,7 @@ public class FxTabPane implements FxParent {
   
   /** {@link ChangeEvent}をリッスンする */
   public void listenChange(Consumer<ChangeEvent>o) {
-    eventer.add(CHANGE_EVENT,  o);
+    eventBus.listen(ChangeEvent.class,  o);
   }
 
   @Override
