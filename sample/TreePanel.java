@@ -1,3 +1,6 @@
+import java.util.*;
+import java.util.stream.*;
+
 import com.cm55.fx.*;
 
 import javafx.scene.control.*;
@@ -9,19 +12,25 @@ public class TreePanel implements FxParent {
   FxTreeView<Mine> treeView;
   
   public TreePanel() {
-    treeView = new FxTreeView<>();
-    TreeItem<Mine> rootItem = new TreeItem<> (new Mine());
-    rootItem.setExpanded(true);
-    for (int i = 1; i < 3; i++) {
-      TreeItem<Mine> item = new TreeItem<> (new Mine());            
-      rootItem.getChildren().add(item);
-      
-      {
-        TreeItem<Mine>sub = new TreeItem<>(new Mine());
-        item.getChildren().add(sub);
+    treeView = new FxTreeView<Mine>(new FxTreeView.Adapter<Mine>() {
+
+      @Override
+      public String getLabel(Mine node) {
+        return node.name;
       }
+
+      @Override
+      public Stream<Mine> children(Mine node) {
+        return node.children.stream();        
+      }      
+    });
+    
+    Mine root = new Mine("a");
+    for (int i = 1; i < 3; i++) {
+      root.children.add(new Mine("b" + i));
+
     }  
-    treeView.setRoot(rootItem);
+    treeView.setRoot(root);
     titledBorder = new FxTitledBorder("test", treeView);
   }
   
@@ -30,6 +39,10 @@ public class TreePanel implements FxParent {
   }
 
   public static class Mine {
-    
+    List<Mine>children = new ArrayList<>();
+    public String name;
+    public Mine(String name) {
+      this.name = name;
+    }
   }
 }
