@@ -3,6 +3,8 @@ package com.cm55.fx;
 
 import java.util.*;
 
+import com.cm55.fx.util.*;
+
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
 

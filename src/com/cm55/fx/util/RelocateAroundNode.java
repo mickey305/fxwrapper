@@ -1,4 +1,6 @@
-package com.cm55.fx;
+package com.cm55.fx.util;
+
+import com.cm55.fx.*;
 
 import javafx.beans.property.*;
 import javafx.beans.value.*;

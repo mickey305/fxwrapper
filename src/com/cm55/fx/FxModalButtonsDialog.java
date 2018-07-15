@@ -1,5 +1,7 @@
 package com.cm55.fx;
 
+import com.cm55.fx.util.*;
+
 import javafx.scene.control.*;
 import javafx.stage.*;
 

@@ -8,7 +8,7 @@ import javafx.geometry.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 
-public abstract class FxBox<T extends FxBox<T>> implements FxNode {
+public abstract class FxBox<T extends FxBox<T>> implements FxParent {
 
   private Region region;
   private ObservableList<Node>children;

@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+import com.cm55.fx.util.*;
+
 import javafx.application.*;
 import javafx.beans.*;
 import javafx.beans.property.*;

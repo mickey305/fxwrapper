@@ -3,7 +3,7 @@ package com.cm55.fx;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 
-public class FxVerBorderPane implements FxNode {
+public class FxVerBorderPane implements FxParent {
 
   private BorderPane pane;
   private FxNode[]nodes;

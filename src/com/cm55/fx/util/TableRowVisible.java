@@ -1,4 +1,4 @@
-package com.cm55.fx;
+package com.cm55.fx.util;
 
 import java.util.*;
 

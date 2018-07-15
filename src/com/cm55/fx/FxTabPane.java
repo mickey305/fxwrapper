@@ -1,86 +1,119 @@
 package com.cm55.fx;
-
 import java.util.*;
 import java.util.function.*;
+import java.util.stream.*;
 
+import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 
-public class FxTabPane extends TabPane {
+/**
+ * タブペイン
+ * @author ysugimura
+ */
+public class FxTabPane implements FxParent {
 
+  private TabPane tabPane;
+  
   public static class ChangeEvent {
-    Node oldNode;
-    Object oldUser;
-    Node newNode;
-    Object newUser;
-    public ChangeEvent(Node oldNode, Object oldUser, Node newNode, Object newUser) {
+    FxNode oldNode;
+    FxNode newNode;
+    public ChangeEvent(FxNode oldNode, FxNode newNode) {
       this.oldNode = oldNode;
-      this.oldUser = oldUser;
       this.newNode = newNode;
-      this.newUser = newUser;
     }
     @SuppressWarnings("unchecked")
-    public <T extends Node>T getOldNode() { return (T)oldNode; }
+    public <T extends FxNode>T getOldNode() { return (T)oldNode; }
     @SuppressWarnings("unchecked")
-    public <T extends Node>T getNewNode() { return (T)newNode; }
-    @SuppressWarnings("unchecked")
-    public <T>T getOldUser() { return (T)oldUser; }
-    @SuppressWarnings("unchecked")
-    public <T>T getNewUser() { return (T)newUser; }
+    public <T extends FxNode>T getNewNode() { return (T)newNode; }
     @Override
     public boolean equals(Object o) {
       if (!(o instanceof ChangeEvent)) return false;
       ChangeEvent that = (ChangeEvent)o;
       return 
           this.oldNode == that.oldNode && 
-          this.oldUser == that.oldUser &&
-          this.newNode == that.newNode &&
-          this.newUser == that.newUser;
+          this.newNode == that.newNode;
     }
   }
 
   private FxEventer eventer = new FxEventer();
   private FxEventType<ChangeEvent>CHANGE_EVENT = new FxEventType<>();
-  private HashMap<Node, Object>userMap = new HashMap<Node, Object>();
-  
+  private HashMap<Node, FxNode>nodeMap = new HashMap<>();
+  private Integer fixedIndex = null;
   /** なぜかイベントが二回発生してしまうため、古い方を覚えておく */
   private ChangeEvent oldChange;
-  
-  public FxTabPane add(String title, Node node) {
-    return add(title, node, null);
+
+  public FxTabPane() {
+    tabPane = new TabPane();
   }
   
-  public FxTabPane add(String title, Node node, Object user) {
-    userMap.put(node,  user);
+  @SuppressWarnings("unchecked")
+  public <T extends FxNode>Stream<T>allNodes() {
+    return tabPane.getTabs().stream().map(tab->(T)nodeMap.get(tab.getContent()));
+  }
+  
+  /**
+   * disable時はタブの選択ができないようにする。
+   * {@link TabPane#setDisable(boolean)}や{@link Tab#setDisable(boolean)}ではだめ。
+   * タブの中身全体がdisable表示になってしまう。
+   * @param value
+   * @return
+   */
+  public FxTabPane setEnabled(boolean value) {
+    if (value == (fixedIndex == null)) return this;  
+    if (value) 
+      fixedIndex = null;
+    else 
+      fixedIndex = tabPane.getSelectionModel().getSelectedIndex();
+    return this;
+  }
+
+  /** 選択中のノードを取得する */
+  @SuppressWarnings("unchecked")
+  public <T extends FxNode>T getSelectedNode() {
+    Node node = tabPane.getSelectionModel().getSelectedItem().getContent();
+    return (T)nodeMap.get(node);
+  }
+  
+  public FxTabPane add(String title, FxNode node) {
+
+    nodeMap.put(node.node(), node);
     Tab tab = new Tab();
     tab.setText(title);
-    tab.setContent(node);
+    tab.setContent(node.node());
     tab.setClosable(false);
-    getTabs().add(tab);
+    tabPane.getTabs().add(tab);
 
-    getSelectionModel().selectedItemProperty().addListener(
-        new ChangeListener<Tab>() {
-            @Override
-            public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
-              Node oldNode = oldTab.getContent();
-              Node newNode = newTab.getContent();
-              ChangeEvent newChange = new ChangeEvent(
-                oldNode, userMap.get(oldNode),
-                newNode, userMap.get(newNode)
-              );
+    tabPane.getSelectionModel().selectedItemProperty().addListener(
+      new ChangeListener<Tab>() {
+        @Override
+        public void changed(ObservableValue<? extends Tab> ov, Tab oldTab, Tab newTab) {
+          if (fixedIndex != null) {
+            Platform.runLater(()->tabPane.getSelectionModel().select(fixedIndex));
+            return;
+          }
+          ChangeEvent newChange = new ChangeEvent(
+            nodeMap.get(oldTab.getContent()),
+            nodeMap.get(newTab.getContent())
+          );
               
-              // なぜかイベントが二回発生してしまうため、以前と同じなら無視
-              if (newChange.equals(oldChange)) return;
-              eventer.fire(CHANGE_EVENT, oldChange = newChange);
-            }
+          // なぜかイベントが二回発生してしまうため、以前と同じなら無視
+          if (newChange.equals(oldChange)) return;
+          eventer.fire(CHANGE_EVENT, oldChange = newChange);
         }
+      }
     );
     return this;
   }
   
+  /** {@link ChangeEvent}をリッスンする */
   public void listenChange(Consumer<ChangeEvent>o) {
     eventer.add(CHANGE_EVENT,  o);
   }
 
+  @Override
+  public Parent node() {
+    return tabPane;
+  }
 }

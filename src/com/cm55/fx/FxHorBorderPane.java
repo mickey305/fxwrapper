@@ -6,7 +6,7 @@ import java.util.stream.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 
-public class FxHorBorderPane implements FxNode {
+public class FxHorBorderPane implements FxParent {
 
   private BorderPane pane;
   private FxNode[]nodes;
