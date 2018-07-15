@@ -87,11 +87,10 @@ public class FxTreeView<T> implements FxParent {
     return this;
   }
   
-
   public TreeView<T> node() {
     return treeView;
   }
-  
+    
   public <E>Unlistener<E>listen(Class<E>clazz, Consumer<E>l) {
     return eventBus.listen(clazz, l);
   }

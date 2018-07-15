@@ -27,7 +27,8 @@ public class TreePanel implements FxParent {
     
     treeView = new FxTreeView<Mine>(adapter);
     treeView.listen(ItemSelectionEvent.class, e-> {
-      System.out.println("" + e.item);
+      Mine mine = (Mine)e.item;
+      System.out.println("" + mine.name);
       
     });
     
