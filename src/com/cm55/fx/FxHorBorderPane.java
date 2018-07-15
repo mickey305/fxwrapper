@@ -47,7 +47,7 @@ public class FxHorBorderPane implements FxParent {
     BorderPane.setMargin(nodes[index].node(), insets);
   }
   
-  public FxHorBorderPane setSpacing(int value) {
+  public FxHorBorderPane setPaddingSpacing(int value) {
     pane.setPadding(new Insets(value, value, value, value));
     List<FxNode>list = Arrays.stream(nodes).filter(n->n != null).collect(Collectors.toList());
     for (int i = 0; i < list.size() - 1; i++)
