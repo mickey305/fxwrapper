@@ -18,15 +18,11 @@ public class FxHorFlowPane implements FxNode {
     flowPane.getChildren().addAll(nodes);
   }
   
-  public FxHorFlowPane setSpacing(int value) {
+  public FxHorFlowPane setPaddingSpacing(int value) {
     flowPane.setPadding(new Insets(value, value, value, value));
     flowPane.setHgap(value);
     flowPane.setVgap(value);    
     return this;
-  }
-  
-  public FlowPane getPane() {
-    return flowPane;
   }
   
   public FlowPane node() {

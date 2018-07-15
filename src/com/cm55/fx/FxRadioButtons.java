@@ -33,9 +33,9 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons>, FxNode {
   public FxRadioButtons(boolean horizontal) {
   
     if (horizontal) {
-      box = new FxHBox();
+      box = new FxBox.Hor();
     } else {
-      box = new FxVBox();
+      box = new FxBox.Ver();
     }
     spacingProperty = box.spacingProperty();
     setSpacing(10);

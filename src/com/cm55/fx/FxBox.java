@@ -58,4 +58,45 @@ public abstract class FxBox<T extends FxBox<T>> implements FxParent {
   public Region node() {
     return region;
   }
+  
+  public static class Hor extends FxBox<Hor> {
+
+    private HBox hbox;
+    
+    public Hor() {
+      hbox = new HBox();
+      setup(hbox, hbox.getChildren());
+      hbox.setAlignment(Pos.CENTER);
+    }
+
+    public Hor(FxNode...nodes) {
+      this();
+      addAll(nodes);
+    }
+    
+    public DoubleProperty spacingProperty() { return hbox.spacingProperty(); }
+  }
+
+  public static class Ver extends FxBox<Ver> {
+
+    private VBox vbox;
+    
+    public Ver() {
+      vbox = new VBox();
+      setup(vbox, vbox.getChildren());
+      vbox.setAlignment(Pos.CENTER);
+    }
+
+    public Ver(FxNode...nodes) {
+      this();
+      addAll(nodes);
+    }
+    
+    public Ver setPrefWidth(double value) {
+      vbox.setPrefWidth(value);
+      return this;
+    }
+    
+    public DoubleProperty spacingProperty() { return vbox.spacingProperty(); }
+  }
 }
