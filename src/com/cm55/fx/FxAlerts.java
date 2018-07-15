@@ -83,7 +83,7 @@ public class FxAlerts {
   private static Optional<ButtonType>showAndWait(FxNode node, Alert alert) {
     if (node != null) {
       alert.initOwner(node.node().getScene().getWindow());
-      new RelocateAroundNode.ForDialog(node, alert);
+      new RelocateAroundNode.ForDialog(node.node(), alert);
     }
     return alert.showAndWait();
   }

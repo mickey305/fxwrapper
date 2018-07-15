@@ -56,7 +56,7 @@ public class FxLineDialog extends FxOkCancelDlg<String, String> {
   
   @Override
   protected void setInput(String input) {
-    new RelocateAroundNode.ForDialog(node, dialog);    
+    new RelocateAroundNode.ForDialog(node.node(), dialog);    
     valueField.setText(input);
     Platform.runLater(()-> {
       valueField.requestFocus();

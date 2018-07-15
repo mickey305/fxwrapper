@@ -55,7 +55,7 @@ public class FxModalButtonsDialog {
    */
   protected int showModal() {
     result = -1;
-    new RelocateAroundNode.ForDialog(node,  dialog);
+    new RelocateAroundNode.ForDialog(node.node(),  dialog);
     dialog.showAndWait();
     return result;
   }
