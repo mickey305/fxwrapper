@@ -68,9 +68,13 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
         .collect(Collectors.toList()).toArray(new Position[0]);
   }
 
-  @SuppressWarnings("unchecked")
   public T setPadding(int value) {
-    pane.setPadding(new Insets(value, value, value, value));
+    return setPadding(new Insets(value, value, value, value));
+  }
+  
+  @SuppressWarnings("unchecked")
+  public T setPadding(Insets insets) {
+    pane.setPadding(insets);
     return (T)this;
   }
   
@@ -107,6 +111,12 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
     public Hor setRightMargin(Insets insets) {
       setMargin(Position.RIGHT, insets);
       return this;
+    }
+    public Hor setLeft(FxNode node) {
+      return set(Position.LEFT, node);
+    }
+    public Hor setRight(FxNode node) {
+      return set(Position.RIGHT, node);
     }
   }
   

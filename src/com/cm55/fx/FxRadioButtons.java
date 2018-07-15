@@ -127,7 +127,7 @@ public class FxRadioButtons implements FocusControl<FxRadioButtons>, FxNode {
   }
 
   
-  public Region node() {
-    return box.getRegion();
+  public Pane node() {
+    return box.node();
   }
 }

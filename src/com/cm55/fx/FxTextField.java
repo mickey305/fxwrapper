@@ -36,6 +36,10 @@ public class FxTextField implements FocusControl<FxTextField>, FxNode {
     });
   }
   
+  public FxTextField clear() {
+    textField.clear();
+    return this;
+  }
   public TextField node() {
     return textField;
   }

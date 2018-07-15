@@ -10,10 +10,10 @@ import javafx.scene.layout.*;
 
 public abstract class FxBox<T extends FxBox<T>> implements FxParent {
 
-  private Region region;
+  private Pane region;
   private ObservableList<Node>children;
   
-  protected void setup(Region region, ObservableList<Node>children) {
+  protected void setup(Pane region, ObservableList<Node>children) {
     this.region = region;
     this.children = children;
   }
@@ -51,11 +51,8 @@ public abstract class FxBox<T extends FxBox<T>> implements FxParent {
   
   public abstract DoubleProperty spacingProperty();
   
-  public Region getRegion() {
-    return region;
-  }
   
-  public Region node() {
+  public Pane node() {
     return region;
   }
   
