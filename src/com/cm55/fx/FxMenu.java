@@ -4,6 +4,7 @@ import java.util.function.*;
 import java.util.stream.*;
 
 import com.cm55.eventBus.*;
+import com.cm55.eventBus.EventType;
 
 import javafx.event.*;
 import javafx.scene.control.*;
@@ -60,11 +61,12 @@ public class FxMenu<T>  {
     }.createMenu(root);    
   }
   
-  @SuppressWarnings("rawtypes")
-  public Unlistener<SelectionEvent> listen(Consumer<SelectionEvent>l) {
-    return eventBus.listen(SelectionEvent.class,  l);
+
+  public static class Node {}
+  public Unlistener<SelectionEvent<Node>> listen(Consumer<SelectionEvent<Node>>l) {
+    return eventBus.listen(new EventType<SelectionEvent<Node>>() {},  l);
   }
-  
+   
   private void test() {
     /*
   
