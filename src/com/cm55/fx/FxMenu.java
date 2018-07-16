@@ -61,10 +61,8 @@ public class FxMenu<T>  {
     }.createMenu(root);    
   }
   
-
-  public static class Node {}
-  public Unlistener<SelectionEvent<Node>> listen(Consumer<SelectionEvent<Node>>l) {
-    return eventBus.listen(new EventType<SelectionEvent<Node>>() {},  l);
+  public Unlistener<SelectionEvent<T>>listen(Consumer<SelectionEvent<T>>listener) {
+    return eventBus.listen(new EventType<SelectionEvent<T>>() {}, listener);
   }
    
   private void test() {
