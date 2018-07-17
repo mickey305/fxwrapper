@@ -23,15 +23,67 @@ import javafx.util.converter.*;
 
 /**
  * テーブル
- * @author admin
- *
+ * 
+ * <h2>テーブルの作成と列の指定</h2>
+ * <p>
+ * 型パラメータEには行として用いるモデルクラスを指定する。いまこれをSampleとする
+ * </p>
+ * <pre>
+ * public class Sample {
+ *   String name;
+ *   int age;
+ *   String address;
+ * }
+ * </pre>
+ * <p>
+ * 以下のようにテーブルを作成する
+ * </p>
+ * <pre>
+ * FxTable<Sample>table = new FxTable<>();
+ * <pre>
+ * <p>
+ * モデルからどのデータを取得し、どのような列を表示するかを指定する。
+ * </p>
+ * <pre>
+ * table.setColumns(
+ *   new FxTable.TextColumn<Sample>("列名称", row->FixedValue.w(row.name)),
+ *   ...
+ * );
+ * </pre>
+ * <p>
+ * 列を表現するクラスとしては他種類あるが、上記のFxTable.TextColumnが最も簡単なものである。列名称と表示データを指定するだけである。
+ * が、見てのとおり、表示データの指定は単純ではない。
+ * </p>
+ * <h2>テーブルには再表示動作が無い</h2>
+ * <p>
+ * 例えば、表示中の行データが変更された場合、Swing等では、その行の再表示を指示することになっているのだが、JavaFxではそうではない。
+ * JavaFxでは、各セルのデータ値はObservableValueであり、テーブル中に表示されると、テーブル側がObservableValueからの変更通知を
+ * 受けるようにセットアップされる。このObservableValueに新たな値を設定すると、それがテーブル側に通知され、表示が更新されるという仕組みになっている。
+ * </p>
+ * <p>
+ * 先にあげた例の中では、「row->FixedValue.w(row.name)」としているが、これは特定の行データが与えられた場合に、そこからObservableValueを
+ * 取得するということである。しかし、この例の場合にはSampleのnameは単純なStringであるので、ObservableValueではない。
+ * </p>
+ * <p>
+ * この例の場合には、単純に固定した値として表示することにしている。つまり、nameに新たな値が設定されても表示上は変更されない。
+ * </p>
+ * <h2>自動再表示を行わせる方法</h2>
+ * <p>
+ * 自動再表示を行わせる一つの方法としては、Sample#nameをObservableにすることである。つまり、
+ * </p>
+ * <pre>
+ * public class Sample {
+ *   SimpleObjectProperty<String> name = new SimpleObjectProperty<>();
+ * }
+ * </pre>
+ * 
  * @param <E>
  */
 public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
 
   private TableView<E> tableView;
   private FxObservableList<E> rows;
-  private FxSingleSelectionModel<E> selection;
+  private FxSingleSelectionModel<E> selectionModel;
   private TableRowVisible<E> tableRowVisible;
   private Consumer<FxTable<E>>focusedCallback;
   private boolean focusable = FocusControlPolicy.getDefaultFocusable();
@@ -44,7 +96,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
       }
     };
     setRows(new FxObservableList<E>());
-    selection = new FxSingleSelectionModel<E>(tableView.getSelectionModel());
+    selectionModel = new FxSingleSelectionModel<E>(tableView.getSelectionModel());
     tableView.setEditable(true);
     tableRowVisible = new TableRowVisible<E>(tableView);
     EventHandler<? super MouseEvent>handler = new EventHandler<MouseEvent> ()  {
@@ -74,8 +126,8 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
   }
 
   /** 列を設定 */
-  @SuppressWarnings("unchecked")
-  public FxTable<E> setColumns(Column<E, ?>... cols) {
+  @SafeVarargs
+  public final FxTable<E> setColumns(Column<E, ?>... cols) {
     columns.clear();
     Set<String>textSet = new HashSet<String>();
     Arrays.stream(cols).forEach(col-> {
@@ -160,10 +212,17 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
   }
 
   /** 選択モデルを取得 */
-  public FxSingleSelectionModel<E> getSelection() {
-    return selection;
+  public FxSingleSelectionModel<E> getSelectionModel() {
+    return selectionModel;
   }
 
+  /** 現在の選択行を取得 */
+  public E getSelection() {
+    int index = selectionModel.getSelectedIndex();
+    if (index < 0) return null;
+    return getRows().get(index);
+  }
+  
   /** TableViewコントロールを取得  */
   public Control node() {
     return tableView;
@@ -255,7 +314,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
    */
   public static class Column<E, T> {
     TableColumn<E, T> col;
-    protected int align;
+    protected FxAlign align;
     
     public Column(String title, PropertyGetter<E, T>propertyGetter) {
       if (title == null)
@@ -267,7 +326,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
       }
     }
     
-    public Column(String title, PropertyGetter<E, T>propertyGetter, int align) {
+    public Column(String title, PropertyGetter<E, T>propertyGetter, FxAlign align) {
       this(title, propertyGetter);
       setAlign(align);
     }
@@ -280,9 +339,9 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
       return col;
     }
 
-    public Column<E, T> setAlign(int align) {
+    public Column<E, T> setAlign(FxAlign align) {
       this.align = align;
-      switch (align) {
+      switch (align.ordinal()) {
       case 1:
         col.setStyle("-fx-alignment: CENTER;");
       case 2:
@@ -310,11 +369,11 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
   public static class TextColumn<E> extends Column<E, String> {    
     
     public TextColumn(String title, PropertyGetter<E, String>propertyGetter) {
-      this(title, propertyGetter, 0);
+      this(title, propertyGetter, FxAlign.LEFT);
     }
 
     /** 列タイトル、フィールド名を指定する */
-    public TextColumn(String title, PropertyGetter<E, String>propertyGetter, int align) {
+    public TextColumn(String title, PropertyGetter<E, String>propertyGetter, FxAlign align) {
       super(title, propertyGetter, align);
       setCellFactory();
     }
@@ -332,8 +391,8 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
           }
         };
         //cell.setStyle("-fx-background-color: yellow");
-        cell.setTextOverrun(OVERRUN_STYLES[align]);
-        cell.setTextAlignment(TEXT_ALIGNMENTS[align]);
+        cell.setTextOverrun(OVERRUN_STYLES[align.ordinal()]);
+        cell.setTextAlignment(TEXT_ALIGNMENTS[align.ordinal()]);
         return cell;
       });      
     }
@@ -361,11 +420,11 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
   public static class ColoredTextColumn<E> extends Column<E, ColoredText> {    
     
     public ColoredTextColumn(String title, PropertyGetter<E, ColoredText>propertyGetter) {
-      this(title, propertyGetter, 0);
+      this(title, propertyGetter, FxAlign.LEFT);
     }
 
     /** 列タイトル、フィールド名を指定する */
-    public ColoredTextColumn(String title, PropertyGetter<E, ColoredText>propertyGetter, int align) {
+    public ColoredTextColumn(String title, PropertyGetter<E, ColoredText>propertyGetter, FxAlign align) {
       super(title, propertyGetter, align);
       setCellFactory();
     }
@@ -397,8 +456,8 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
           }
         };
         //cell.setStyle("-fx-background-color: yellow");
-        cell.setTextOverrun(OVERRUN_STYLES[align]);
-        cell.setTextAlignment(TEXT_ALIGNMENTS[align]);
+        cell.setTextOverrun(OVERRUN_STYLES[align.ordinal()]);
+        cell.setTextAlignment(TEXT_ALIGNMENTS[align.ordinal()]);
         return cell;
       });      
     }
@@ -416,11 +475,11 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
     private Consumer<Integer> actionCallback;
     
     public CheckColumn(String title, PropertyGetter<E, Boolean>propertyGetter) {
-      this(title, propertyGetter, 0);
+      this(title, propertyGetter, FxAlign.LEFT);
     }
 
     /** 列タイトル、フィールド名を指定する */
-    public CheckColumn(String title, PropertyGetter<E, Boolean>propertyGetter, int align) {
+    public CheckColumn(String title, PropertyGetter<E, Boolean>propertyGetter, FxAlign align) {
       super(title, propertyGetter, align);
       col.setCellFactory(column -> new TableCell<E, Boolean>() {
         public void updateItem(Boolean check, boolean empty) {

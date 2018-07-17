@@ -47,7 +47,7 @@ public class FxTreeView<T> implements FxParent {
     @Override
     public void updateItem(T data, boolean empty){          
         super.updateItem(data, empty);
-        System.out.println("" + data);
+        //ystem.out.println("" + data);
         if (data == null) return;
         if(empty){
             //空の場合は、ラベルもアイコンも表示させない
@@ -77,7 +77,7 @@ public class FxTreeView<T> implements FxParent {
       TreeItem<T>getTreeItem(T node) {
         TreeItem<T>item = new TreeItem<T>(node);
         adapter.children(node).forEach(n-> {
-          item.getChildren().add(new TreeItem<T>(n));
+          item.getChildren().add(getTreeItem(n));          
         });
         return item;
       }      

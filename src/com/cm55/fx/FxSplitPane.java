@@ -15,6 +15,10 @@ import javafx.collections.*;
 import javafx.scene.Node;
 import javafx.scene.layout.*;
 
+/**
+ * 
+ * @author ysugimura
+ */
 public class FxSplitPane implements FxParent {
   
   public static class Hor extends FxSplitPane {

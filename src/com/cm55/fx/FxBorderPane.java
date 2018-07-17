@@ -6,6 +6,12 @@ import java.util.stream.*;
 import javafx.geometry.*;
 import javafx.scene.layout.*;
 
+/**
+ * いわゆるボーダーレイアウトを行う
+ * @author ysugimura
+ *
+ * @param <T>
+ */
 public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParent {
 
   public static enum Position {
@@ -94,7 +100,11 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
   public T setCenter(FxNode node) {
     return set(Position.CENTER, node);    
   }
-  
+
+  /**
+   * 水平方向に、左・中央・右の三つの部分に分割する。
+   * 左・右は最小限の幅になり、余った部分すべてが中央に割当てられる。
+   */
   public static class Hor extends FxBorderPane<Hor> {
     public Hor() {}
     public Hor(FxNode left, FxNode center, FxNode right) {
@@ -120,6 +130,10 @@ public abstract class FxBorderPane<T extends FxBorderPane<T>> implements FxParen
     }
   }
   
+  /**
+   * 垂直方向に、上・中央・下の三つの部分に分割する。
+   * 上・下は最小限の幅になり、余った部分すべてが中央に割当てられる。
+   */
   public static class Ver extends FxBorderPane<Ver> {
     public Ver() {}
     public Ver(FxNode top, FxNode center, FxNode bottom) {

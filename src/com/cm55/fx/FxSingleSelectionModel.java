@@ -7,6 +7,12 @@ import com.cm55.eventBus.*;
 
 import javafx.scene.control.*;
 
+/**
+ * 単一選択モデル
+ * @author ysugimura
+ *
+ * @param <E>
+ */
 public class FxSingleSelectionModel<E> {
 
   private MultipleSelectionModel<E> selectionModel;

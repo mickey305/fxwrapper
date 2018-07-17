@@ -5,6 +5,14 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 
+/**
+ * タスクバーアイコンを避ける方法が無い。
+ * https://stackoverflow.com/questions/24564136/javafx-can-you-create-a-stage-that-doesnt-show-on-the-task-bar-and-is-undecora
+ * @author ysugimura
+ *
+ * @param <I>
+ * @param <R>
+ */
 public abstract class FxOkCancelDlg<I, R> {
 
   protected Dialog<R> dialog;
