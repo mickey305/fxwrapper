@@ -6,14 +6,14 @@ import javafx.scene.control.*;
 
 public abstract class FxCloseDlg<I, R> {
 
-  protected Dialog<R> dialog;
+  protected FxDialog<R> dialog;
   
   public FxCloseDlg() {
   }
   
   protected void initialize() {
     if (dialog != null) return;
-    dialog = new Dialog<R>();    
+    dialog = new FxDialog<R>();    
     dialog.setTitle(getTitle());
     DialogPane dialogPane = dialog.getDialogPane();
     dialogPane.setContent(getContent());

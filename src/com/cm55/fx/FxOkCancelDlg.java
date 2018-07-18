@@ -15,7 +15,7 @@ import javafx.stage.*;
  */
 public abstract class FxOkCancelDlg<I, R> {
 
-  protected Dialog<R> dialog;
+  protected FxDialog<R> dialog;
   protected Window window;
   
   public FxOkCancelDlg() {
@@ -23,7 +23,7 @@ public abstract class FxOkCancelDlg<I, R> {
   
   protected boolean initialize(FxNode node) {
     if (dialog != null) return false;
-    dialog = new Dialog<R>();    
+    dialog = new FxDialog<R>();    
     dialog.setTitle(getTitle());
     DialogPane dialogPane = dialog.getDialogPane();
     dialogPane.setContent(getContent());

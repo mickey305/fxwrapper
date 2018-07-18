@@ -39,15 +39,15 @@ public class FxStageBoundsHolder {
    * 通常のステージの場合
    * @param stage
    */
-  public FxStageBoundsHolder(Stage stage) {
-    this(stage, null);
+  public FxStageBoundsHolder(FxStage stage) {
+    this(stage.getStage(), null);
   }
 
   /**
    * ダイアログの場合
    * @param dialog
    */
-  public FxStageBoundsHolder(Dialog<?>dialog) {
+  public FxStageBoundsHolder(FxDialog<?>dialog) {
     this((Stage)dialog.getDialogPane().getScene().getWindow(),
         dialog.getDialogPane());    
   }

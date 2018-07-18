@@ -55,7 +55,7 @@ public class FxProcessingConsole extends FxModelessCancellableDialog {
   }
 
   /** ダイアログを取得する */
-  public Dialog<?>getDialog() {
+  public FxDialog<?>getDialog() {
     return dialog;
   }
   

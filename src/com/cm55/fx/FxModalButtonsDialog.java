@@ -14,7 +14,7 @@ import javafx.stage.*;
 public class FxModalButtonsDialog {
 
   protected FxNode node;
-  protected Dialog<Integer> dialog;
+  protected FxDialog<Integer> dialog;
   protected Window window;
   protected DialogPane dialogPane;
   
@@ -27,7 +27,7 @@ public class FxModalButtonsDialog {
       hbox.add(button);
     }
     hbox.setSpacing(10);
-    dialog = new Dialog<Integer>();
+    dialog = new FxDialog<Integer>();
     dialog.setTitle(title);
     dialog.initOwner(node.node().getScene().getWindow());
     dialog.initModality(Modality.WINDOW_MODAL);   
@@ -55,7 +55,7 @@ public class FxModalButtonsDialog {
    */
   protected int showModal() {
     result = -1;
-    new RelocateAroundNode.ForDialog(node.node(),  dialog);
+    new RelocateAroundNode.ForDialog(node,  dialog);
     dialog.showAndWait();
     return result;
   }

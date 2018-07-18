@@ -13,13 +13,13 @@ import javafx.stage.*;
  */
 public class FxModelessDialog {
 
-  protected final Dialog<Object> dialog;
+  protected final FxDialog<Object> dialog;
   protected final Window window;
   protected final DialogPane dialogPane;
   protected final SimpleBooleanProperty showingProperty = new SimpleBooleanProperty();
   
   public FxModelessDialog() {
-    dialog = new Dialog<Object>();
+    dialog = new FxDialog<Object>();
     dialog.initModality(Modality.NONE);   
     dialogPane = dialog.getDialogPane();    
     window = dialogPane.getScene().getWindow();

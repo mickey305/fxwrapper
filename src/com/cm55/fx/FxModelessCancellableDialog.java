@@ -10,12 +10,12 @@ import javafx.stage.*;
  */
 public class FxModelessCancellableDialog {
 
-  protected final Dialog<Object> dialog;
+  protected final FxDialog<Object> dialog;
   protected final Window window;
   protected final DialogPane dialogPane;
   
   public FxModelessCancellableDialog(FxNode node) {
-    dialog = new Dialog<Object>();
+    dialog = new FxDialog<Object>();
     dialog.initModality(Modality.NONE);  
     dialog.initOwner(node.node().getScene().getWindow());
     dialogPane = dialog.getDialogPane();    

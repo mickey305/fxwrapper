@@ -4,9 +4,10 @@ import java.util.function.*;
 
 import javafx.beans.property.*;
 import javafx.beans.value.*;
+import javafx.event.*;
 import javafx.stage.*;
 
-public class FxStage {
+public class FxStage extends FxWindow<FxStage> {
 
   private final Stage stage;
   
@@ -84,29 +85,99 @@ public class FxStage {
     stage.setScene(scene.scene);
     return this;
   }
+  
+  /** Stageを取得 */
+  public Stage getStage() {
+    return stage;
+  }
 
+  public FxStage setOnCloseRequest(EventHandler<WindowEvent> value) {
+    stage.setOnCloseRequest(value);
+    return this;
+  }
+  
+  // Overriding FxWindow ///////////////////////////////////////////////////////
+  
+  @Override
+  public StringProperty titleProperty() {
+    return stage.titleProperty();
+  }
+  
+  @Override
+  public FxStage setResizable(boolean value) {
+    stage.setResizable(value);
+    return this;
+  }
+  
   /** タイトルを設定 */
+  @Override
   public FxStage setTitle(String title) {
     stage.setTitle(title);
     return this;
   }
   
   /** オーナーを設定 */
+  @Override
   public FxStage initOwner(Window window) {
     stage.initOwner(window);
     return this;
   }
 
+  
+  @Override
   public void show() {
     stage.show();
   }
   
+  @Override
   public void showAndWait() {
     stage.showAndWait();
   }
-  
-  /** Stageを取得 */
-  public Stage getStage() {
-    return stage;
+
+  @Override
+  public ReadOnlyDoubleProperty widthProperty() {
+    return stage.widthProperty();
   }
+
+  @Override
+  public ReadOnlyDoubleProperty heightProperty() {
+    return stage.heightProperty();
+  }
+  
+  @Override
+  public boolean isShowing() {
+    return stage.isShowing();
+  }
+  
+  @Override
+  public FxStage setX(double x) {
+    stage.setX(x);
+    return this;
+  }
+
+  @Override
+  public FxStage setY(double y) {
+    stage.setY(y);
+    return this;
+  }
+  
+  @Override
+  public FxStage setWidth(double width) {
+    stage.setWidth(width);
+    return this;
+  }
+
+  @Override
+  public FxStage setHeight(double height) {
+    stage.setHeight(height);
+    return this;
+  }
+
+  @Override
+  public FxStage initModality(Modality value) {
+    stage.initModality(value);
+    return this;
+  }
+  
+  
 }
