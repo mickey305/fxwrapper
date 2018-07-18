@@ -65,11 +65,11 @@ public class AbstractMenu<T> {
     Menu createMenu(T node, boolean select) {
       
       String label = adapter.getLabel(node);
-      System.out.println("createContextMenu " + label);
+      //ystem.out.println("createContextMenu " + label);
       Menu menu = new Menu(label);
       
       if (select) {
-        System.out.println("child " + adapter.getLabel(node));
+        //ystem.out.println("child " + adapter.getLabel(node));
         MenuItem item = new MenuItem(adapter.getLabel(node));                          
         item.addEventHandler(ActionEvent.ACTION , e ->  eventBus.dispatchEvent(new SelectionEvent<T>(node)));
         menu.getItems().add(item);
