@@ -71,7 +71,8 @@ public class FxTreeView<T> implements FxParent {
     this(adapter);
     setRoot(root);
   }
-  
+
+  /** ルートを設定する */
   public FxTreeView<T> setRoot(T root) {
     TreeItem<T>treeItem = new Object() {
       TreeItem<T>getTreeItem(T node) {
@@ -87,12 +88,22 @@ public class FxTreeView<T> implements FxParent {
     return this;
   }
   
+  /** アイテムを選択する */
+  public void selectItem(T item) {
+    System.out.println("selectItem " + item);
+  }
+
+  /** ノードを取得する */
   public TreeView<T> node() {
     return treeView;
   }
     
   public <E>Unlistener<E>listen(Class<E>clazz, Consumer<E>l) {
     return eventBus.listen(clazz, l);
+  }
+  
+  public <E>Unlistener<E>listen(EventType<E>et, Consumer<E>l) {
+    return eventBus.listen((EventType<E>)et, l);
   }
   
   public static class ItemSelectionEvent<T> {
