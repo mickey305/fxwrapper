@@ -16,7 +16,7 @@ import javafx.stage.*;
  * </p>
  * @author admin
  */
-public class WindowBoundsState<T extends WindowBounds> {
+public class WindowBoundsPersister<T extends WindowBounds> {
   
   public interface LoadSave<T extends WindowBounds> {
     public T load();

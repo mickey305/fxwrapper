@@ -50,18 +50,20 @@ public abstract class WindowBounds {
   }
   
   /**
-   * 現在の状態を{@link Stage}に設定する。ただし、スクリーンの大きさを考慮して正しいものに補正される。
+   * 現在の状態を{@link FxStage}に設定する。ただし、スクリーンの大きさを考慮して補正される。
    * @param stage
    */
   public void setToStage(FxStage stage) {
     setToStage(stage.getStage(), null);
   }
   
+  /** 現在の状態を{@link FxDialog}に設定する。ただし、スクリーンの大きさを考慮して補正される */
   public void setToDialog(FxDialog<?>dialog) {
     DialogPane dialogPane = dialog.getDialogPane();
     setToStage((Stage)dialogPane.getScene().getWindow(), dialogPane);
   }
   
+
   private void setToStage(Stage stage, DialogPane dialogPane) {
     
     Rectangle2D r = fixWindowBounds(new Rectangle2D(x, y, width, height));
