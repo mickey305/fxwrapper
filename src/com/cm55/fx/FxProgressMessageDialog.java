@@ -1,7 +1,9 @@
 package com.cm55.fx;
 
+import java.util.concurrent.*;
 import java.util.function.*;
 
+import javafx.application.*;
 import javafx.beans.value.*;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.*;
@@ -25,7 +27,7 @@ public class FxProgressMessageDialog {
     dialog.setTitle("Waiting");
     dialog.setHeaderText("Please wait for a while");
     dialog.initOwner(node.node().getScene().getWindow());
-    dialog.initModality(Modality.NONE);
+    dialog.initModality(Modality.APPLICATION_MODAL);
     if (cancelCallback != null) handleCancel(cancelCallback);
   }
   
@@ -58,6 +60,25 @@ public class FxProgressMessageDialog {
     return this;
   }
 
+  public <T>void show(Callable<T>callable, Consumer<T>returns, Consumer<Exception>exception) {
+    ExecutorService service = Executors.newSingleThreadExecutor();
+    service.submit(()-> {
+      try {
+        T r;
+        try {
+          r = callable.call();
+        } finally {
+          Platform.runLater(()->close());
+        }
+        Platform.runLater(()->returns.accept(r));      
+      } catch (Exception ex) {
+        Platform.runLater(()->exception.accept(ex));
+      }      
+    });
+    service.shutdown();
+    dialog.show();
+  }
+  
   /** キャンセルボタン以外で明示的に閉じる場合に使用する */
   public FxProgressMessageDialog close() {
     this.programaticallyClosed = true;
