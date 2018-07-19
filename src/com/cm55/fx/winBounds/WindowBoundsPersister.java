@@ -24,15 +24,15 @@ public class WindowBoundsPersister<T extends WindowBounds> {
     public Class<T>targetClass();
   }
   
-  private Stage stage;
-  private LoadSave<T>loadSave;
-  private FxStageBoundsHolder stageBoundsHolder;
+  private final Stage stage;
+  private final LoadSave<T>loadSave;
+  private final FxStageBoundsHolder stageBoundsHolder;
       
   /**
    * 対象とするウインドウとセーブファイルの指定。ファイルからロードし、状態をウインドウに設定する
    * @param stage
    */
-  public void begin(FxStage stage, LoadSave<T>loadSave) {
+  public WindowBoundsPersister(FxStage stage, LoadSave<T>loadSave) {
     this.stage = stage.getStage();
     this.loadSave = loadSave;
     WindowBounds windowBounds = loadSave.load();
@@ -45,7 +45,7 @@ public class WindowBoundsPersister<T extends WindowBounds> {
    * @param dialog
    * @param clazz
    */
-  public void begin(FxDialog<?> dialog, LoadSave<T>loadSave) {
+  public WindowBoundsPersister(FxDialog<?> dialog, LoadSave<T>loadSave) {
     this.stage = (Stage)dialog.getDialogPane().getScene().getWindow();
     this.loadSave = loadSave;
     WindowBounds windowBounds = loadSave.load();
