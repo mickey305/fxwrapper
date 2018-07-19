@@ -61,8 +61,6 @@ public class WindowBoundsPersister<T extends WindowBounds> {
     Rectangle2D bounds = stageBoundsHolder.getLastBounds();
     T windowBounds;
     try {
-      System.out.println("load " + loadSave);
-      System.out.println("class " + loadSave.targetClass());
       windowBounds = loadSave.targetClass().newInstance();
     } catch (Exception ex) {
       throw new RuntimeException(ex);
