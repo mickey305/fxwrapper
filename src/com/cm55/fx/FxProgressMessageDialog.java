@@ -24,6 +24,9 @@ public class FxProgressMessageDialog {
   
   public FxProgressMessageDialog(FxNode node, String message, Consumer<ButtonType> cancelCallback) {
     dialog = new Alert(AlertType.INFORMATION, message, ButtonType.CANCEL);
+    
+    //dialog.getDialogPane().getButtonTypes().removeAll(elements);
+    
     dialog.setTitle("Waiting");
     dialog.setHeaderText("Please wait for a while");
     dialog.initOwner(node.node().getScene().getWindow());
