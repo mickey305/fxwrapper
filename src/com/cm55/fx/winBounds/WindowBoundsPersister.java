@@ -47,6 +47,7 @@ public class WindowBoundsPersister<T extends WindowBounds> {
    */
   public void begin(FxDialog<?> dialog, LoadSave<T>loadSave) {
     this.stage = (Stage)dialog.getDialogPane().getScene().getWindow();
+    this.loadSave = loadSave;
     WindowBounds windowBounds = loadSave.load();
     windowBounds.setToDialog(dialog);    
     stageBoundsHolder = new FxStageBoundsHolder(dialog);
@@ -60,6 +61,8 @@ public class WindowBoundsPersister<T extends WindowBounds> {
     Rectangle2D bounds = stageBoundsHolder.getLastBounds();
     T windowBounds;
     try {
+      System.out.println("load " + loadSave);
+      System.out.println("class " + loadSave.targetClass());
       windowBounds = loadSave.targetClass().newInstance();
     } catch (Exception ex) {
       throw new RuntimeException(ex);
