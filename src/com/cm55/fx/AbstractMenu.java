@@ -77,7 +77,7 @@ public class AbstractMenu<T> {
       }
       
       adapter.children(node).forEach(child-> {
-        System.out.println("child " + adapter.getLabel(child));
+        //ystem.out.println("child " + adapter.getLabel(child));
         menu.getItems().add(createItem(child));
       });
       return menu;

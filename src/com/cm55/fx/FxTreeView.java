@@ -90,7 +90,7 @@ public class FxTreeView<T> implements FxParent {
   
   /** アイテムを選択する */
   public void selectItem(T item) {
-    System.out.println("selectItem " + item);
+    //ystem.out.println("selectItem " + item);
   }
 
   /** ノードを取得する */
