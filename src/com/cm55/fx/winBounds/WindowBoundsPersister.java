@@ -19,7 +19,10 @@ import javafx.stage.*;
 public class WindowBoundsPersister<T extends WindowBounds> {
   
   public interface LoadSave<T extends WindowBounds> {
+    /** WindowBoundsをロードするが、無いときはnullでもよい */
     public T load();
+    
+    /** WindowBoundsをセーブする */
     public void save(T value);
     public Class<T>targetClass();
   }
@@ -36,7 +39,9 @@ public class WindowBoundsPersister<T extends WindowBounds> {
     this.stage = stage.getStage();
     this.loadSave = loadSave;
     WindowBounds windowBounds = loadSave.load();
-    windowBounds.setToStage(stage);    
+    if (windowBounds != null) {
+      windowBounds.setToStage(stage);    
+    }
     stageBoundsHolder = new FxStageBoundsHolder(stage);
   }
 
@@ -49,7 +54,9 @@ public class WindowBoundsPersister<T extends WindowBounds> {
     this.stage = (Stage)dialog.getDialogPane().getScene().getWindow();
     this.loadSave = loadSave;
     WindowBounds windowBounds = loadSave.load();
-    windowBounds.setToDialog(dialog);    
+    if (windowBounds != null) {
+      windowBounds.setToDialog(dialog);    
+    }
     stageBoundsHolder = new FxStageBoundsHolder(dialog);
   }
   
