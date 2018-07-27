@@ -217,6 +217,7 @@ public class FxTable<E> implements FocusControl<FxTable<E>>, FxNode {
   }
 
   /** 現在の選択行を取得 */
+  @SuppressWarnings("restriction")
   public E getSelection() {
     int index = selectionModel.getSelectedIndex();
     if (index < 0) return null;
