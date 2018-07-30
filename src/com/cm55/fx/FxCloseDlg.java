@@ -3,10 +3,12 @@ package com.cm55.fx;
 import javafx.event.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
+import javafx.stage.*;
 
 public abstract class FxCloseDlg<I, R> {
 
   protected FxDialog<R> dialog;
+  protected Window window;
   
   public FxCloseDlg() {
   }
@@ -24,6 +26,9 @@ public abstract class FxCloseDlg<I, R> {
       result = FxCloseDlg.this.getOutput();
       if (result == null)  event.consume();
     });
+    window = dialogPane.getScene().getWindow();
+    window.setOnShowing(e-> onShowing());
+    window.setOnHiding(e->  onHiding());
   }
   
   private R result = null;
@@ -44,4 +49,6 @@ public abstract class FxCloseDlg<I, R> {
   
   protected abstract R getOutput();
 
+  protected void onShowing() {}
+  protected void onHiding() {}
 }
